@@ -29,21 +29,16 @@ class HomeScreen extends StatelessWidget {
 
       //
 
-      //este metodo me permite hacer scroll, cuando los elementos no caben en la pantalla
       body: SingleChildScrollView(
         child: Column(
           children: [
-            //tarjetas principales
             CardSwiper(movies: moviesProvider.onDisplayMovies),
 
-            //slider de pelicuas
             MovieSlider(
               movies: moviesProvider.popularMovies,
               title: 'populares',
               onNextPage: () => moviesProvider.getPopularMovies(),
-              //{
-              // print('hola mundo');
-              //}, //opcional
+           
             ),
           ],
         ),
