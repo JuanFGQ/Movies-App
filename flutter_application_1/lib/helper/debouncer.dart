@@ -1,5 +1,5 @@
 import 'dart:async';
-// Creditos
+// credits
 // https://stackoverflow.com/a/52922130/7834829
 
 class Debouncer<T> {
