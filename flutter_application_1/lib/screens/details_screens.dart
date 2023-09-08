@@ -13,7 +13,6 @@ class DetailsScreen extends StatelessWidget {
       child: CustomScrollView(
         slivers: [
           _CustomAppBar(movie),
-          //es una lista en la cual puedo meter mis widgets normales
           SliverList(
             delegate: SliverChildListDelegate([
               _PosterAndTitle(movie),
@@ -31,7 +30,6 @@ class DetailsScreen extends StatelessWidget {
 class _CustomAppBar extends StatelessWidget {
   //
 
-  //******cree esta propiedad para llamar a la instacia de MOVIE.DART */
   final Movie movie;
 
   const _CustomAppBar(this.movie);
@@ -39,9 +37,9 @@ class _CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      /*con este sliver appbar se puede controlar el ancho del mismo appbar,
-      a diferencia del appbar tradicional
-      */
+    /*with this sliver appbar you can control the width of the appbar itself,
+       unlike the traditional appbar
+       */
       backgroundColor: Colors.amberAccent,
       expandedHeight: 200,
       floating: false,
@@ -63,8 +61,8 @@ class _CustomAppBar extends StatelessWidget {
         background: FadeInImage(
           placeholder: AssetImage('assets/loading.gif'),
           image: NetworkImage(movie.fullBackdropPath),
-          //el FIT sirve para que la imagen se expanda todo lo que de la pantalla sin que se pierda
-          //la dimension de la misma
+         //FIT is used so that the image expands as much as possible on the screen without being lost
+           // its dimension
           fit: BoxFit.cover,
         ),
       ),
@@ -88,14 +86,11 @@ class _PosterAndTitle extends StatelessWidget {
     return Container(
       margin: EdgeInsets.only(top: 20),
       padding: EdgeInsets.symmetric(horizontal: 20),
-      //el row para colocar objetos a lado de otros
       child: Row(
         children: [
-          //el cliprrect que habia aqui se envolvio con Hero
           Hero(
             tag: movie.heroId!,
-            //se coloca el signo de admiracion porque se tiene
-            //certeza de que el valor va a estar ahi
+          
             child: ClipRRect(
               borderRadius: BorderRadius.circular(50),
               child: FadeInImage(
