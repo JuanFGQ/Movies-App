@@ -11,11 +11,11 @@ class CardSwiper extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    ///***esto es para solucionar el error que aparecia cuando apenas estaba cargando
-    ///****la imagen...lo que se hace es crear un circulo de carga para que no se vea la
-    ///****pantalla roja....esto se crea antes de crear el widget */ */
+   ///***this is to solve the error that appeared when it was just loading
+     ///****the image...what is done is to create a loading circle so that the image cannot be seen
+     ///****red screen....this is created before creating the widget */ */
     if (this.movies.length == 0) {
-      ///****esto dice: si la longitud(length) de las peliculas es 0 que muestre el ciculo de carga */
+///****this says: if the length(length) of the movies is 0 show the load cycle */
       return Container(
         width: double.infinity,
         height: size.height * 0.5,
@@ -25,7 +25,6 @@ class CardSwiper extends StatelessWidget {
       );
     }
 
-    //*****creacion de card swiper */
     return Container(
       width: double.infinity,
       height: size.height * 0.6,
@@ -40,16 +39,11 @@ class CardSwiper extends StatelessWidget {
 
           movie.heroId = 'swiper-${movie.id}';
 
-          // print(movie.fullPosterImg);
-          //
-          //el fadein Image lo envolvi en otro widget para añadir un border radius
-          //y el clipRRect se envolvio en otro widget para ponerle ontap..que es
-          //para hacer una navegacion a otra pantalla
+
           return GestureDetector(
             onTap: () =>
                 Navigator.pushNamed(context, 'details', arguments: movie),
 
-            //el CLIPREECT QUE HABIA AQUI LO ENVOLVI CON UN HERO
             child: Hero(
               tag: movie.heroId!,
               child: ClipRRect(
