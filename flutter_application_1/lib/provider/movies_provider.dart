@@ -17,27 +17,25 @@ class MoviesProvider extends ChangeNotifier {
   String _baseUrl = "api.themoviedb.org";
   String _language = 'es-ES';
 
-  //******** estos son arreglos para guardar los datos de los metodos creados
-  //como por ejemplo los metodos de getOnDisplayMovies y getPopularMovies */
+//******** these are arrangements to save the data of the created methods
+   //such as the getOnDisplayMovies and getPopularMovies methods */
   List<Movie> onDisplayMovies = [];
   List<Movie> popularMovies = [];
-
-//****metodo que sirve para lo mismo que el declarado en las lineas 17 y 18 (otra forma de hacerlo) */
-// el int va a ser el id de la pelicula ( ya que es numerico)
+//****method that serves the same purpose as the one declared in lines 17 and 18 (another way to do it) */
+// the int will be the id of the movie (since it is numeric)
 //
-// la llave es el id de la pelicula("INT") y el resultado es lo demas (List<Cast>>)
-  Map<int, List<Cast>> moviesCast = {};
+// the key is the id of the movie("INT") and the result is the rest (List<Cast>>)  Map<int, List<Cast>> moviesCast = {};
 
-//variable creada para el incremento en el metodo popular movies
+//variable created for the increment in the popular movies method
   int _popularPage = 0;
 
-//este metodo me pide si o si los dos valores que tiene dentro
+//this method asks me yes or yes for the two values it has inside
   final debouncer = Debouncer(
     duration: Duration(milliseconds: 500),
   );
 
-//el stream controller va a estar emitiendo valores
-// a traves de una lista, que lista? la de las peliculas movies
+//the stream controller will be emitting values
+// through a list, what list? the one with the movies
   final StreamController<List<Movie>> _suggestionStreamController =
       new StreamController.broadcast();
 
@@ -47,21 +45,22 @@ class MoviesProvider extends ChangeNotifier {
   MoviesProvider() {
     print('movies provider inicializando');
 
-    //*****se tiene que mandar a llamar para que se ejecute el metodo */
+    //*****it must be called for the method to be executed */
+
     getOnDisplayMovies();
     getPopularMovies();
+//stream closure has to be called somewhere, it is mandatory
 
-//se tiene que llamar el cierre del stream en algun sitio, es obligatorio
   }
 
-//*****metodo creado para optimizar el codigo que se repite,
-//*****con el objetivo de que con solo llamar un metodo podamos
-//***** evitar copiar mas de lo mismo/
-  /*se coloca el argumento
-                              string mas un nombre que 
-                              yo asigno con el objetivo
-                              de que el valor de ese endpoint 
-                              sea dinamico*/
+//*****method created to optimize the code that is repeated,
+//*****with the aim that by just calling a method we can
+//***** avoid copying more of the same/
+   /* put the argument
+                            string plus a name that
+                               I assign with the objective
+                               that the value of that endpoint
+                               be dynamic**/
   Future<String> _getJasonData(String endPoint, [int page = 1]) async {
     final url = Uri.https(_baseUrl, endPoint,
         {'api_key': _apiKey, 'language': _language, 'page': '$page'});
@@ -80,27 +79,29 @@ class MoviesProvider extends ChangeNotifier {
     notifyListeners();
   }
 
-  //*****Tengo que crear otro metodo que me dispare el otro dato que necesito que seria el popular movies */
-
-  //******TIENE QUE SER UN METODO ASYNCRONO PORQUE TENGO QUE HACER PETICIONES HTTP */
+//*****I have to create another method that will trigger the other data that I need, which would be the popular movies */
+//******IT HAS TO BE AN ASYNCHRONOUS METHOD BECAUSE I HAVE TO MAKE HTTP REQUESTS */
+  
+  
   getPopularMovies() async {
-    //se hace incremento para que al cambiar de pagina se mantengan las peliculas
+//increment is made so that when changing the page the movies are maintained
+    
     _popularPage++;
 
     final jsonData = await this._getJasonData('3/movie/popular', _popularPage);
     final popularResponse = PopularResponse.fromJson(jsonData);
 
-    ///******se desestructura porque eventualmente el popular movies se va a volver a llamar */
-
-    ///
-    /// *****     este metodo concatenado toma las peliculas actuales y siempre va a ser parte de las
-    /// *****     popular movies y va a mantener las peliculas asi se cambien de pagina
+///******is deconstructed because eventually the popular movies will be called again */
+///
+     /// ***** this concatenated method takes the current movies and will always be part of the
+     /// ***** popular movies and will keep the movies even if they change pages
+    
     popularMovies = [...popularMovies, ...popularResponse.results];
     // print(popularMovies[0]);
     notifyListeners();
   }
 
-// metodo para obtener el casting de la pelicula
+// method to obtain the casting of the movie
   Future<List<Cast>> getMovieCast(int movieId) async {
     if (moviesCast.containsKey(movieId)) return moviesCast[movieId]!;
 
@@ -115,8 +116,7 @@ class MoviesProvider extends ChangeNotifier {
     return creditsResponse.cast;
   }
 
-  //Metodo para la busqueda de peliculas
-
+//Method for searching for movies
   Future<List<Movie>> searchMovies(String query) async {
     //
     final url = Uri.https(_baseUrl, '3/search/movie', {
