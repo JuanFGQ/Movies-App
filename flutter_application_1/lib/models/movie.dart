@@ -33,9 +33,9 @@ class Movie {
   double voteAverage;
   int voteCount;
 
-//se crea este id unico para que en la animacion de HERO
-//se pueda diferenciar quien utiliza que ID porque antes
-//compartian el mismo MOVIEID
+//this unique id is created so that in the HERO animation
+//you can differentiate who uses which ID because before
+//they shared the same MOVIEID
   String? heroId;
 
   get fullPosterImg {
