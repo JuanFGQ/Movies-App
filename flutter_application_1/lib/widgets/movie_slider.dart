@@ -1,13 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/models/models.dart';
 
-//para el infinite scroll horizontal cambiamos a statefulwidget
 class MovieSlider extends StatefulWidget {
   final List<Movie> movies;
   final String? title;
 
-  //metodo que se llama cuando se llega al limite del horizontal scroll para que
-  //despliegue mas peliculas
   final Function onNextPage;
 
   const MovieSlider(
@@ -19,9 +16,7 @@ class MovieSlider extends StatefulWidget {
 }
 
 class _MovieSliderState extends State<MovieSlider> {
-//metodos init y dispose creados para el slider horizontal infinito
 
-//variable creada para saber los valores del slider
 
   final ScrollController scrollController = new ScrollController();
 
@@ -39,7 +34,6 @@ class _MovieSliderState extends State<MovieSlider> {
 
   @override
   void dispose() {
-    // TODO: implement dispose
     super.dispose();
   }
 
@@ -48,12 +42,10 @@ class _MovieSliderState extends State<MovieSlider> {
     return Container(
       width: double.infinity,
       height: 300,
-      /*porque aqui una columna en el child? /porque necesito colocar 
-      widgets encima de otros*/
+   
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          //se pone el padding aqui para que solo sea el texto el que haga su padding
 
           if (this.widget.title != null)
             Padding(
@@ -70,8 +62,7 @@ class _MovieSliderState extends State<MovieSlider> {
           Expanded(
             child: ListView.builder(
               controller: scrollController,
-              //scrollDirectio sirve para que las tarjetas vayan en horizontal o vertical
-              //segun lo que se requiera luego de los dos puntos se pones AXIS. horizontal o vertical
+            
               scrollDirection: Axis.horizontal,
               itemCount: widget.movies.length,
               itemBuilder: (_, int index) => _MoviePoster(widget.movies[index],
@@ -127,7 +118,6 @@ class _MoviePoster extends StatelessWidget {
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
-            //el metodo de arriba sirve para que un texto largo se acomode a una ventana pequeña
           ),
         ],
       ),
