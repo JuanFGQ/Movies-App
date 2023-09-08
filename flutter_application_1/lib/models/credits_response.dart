@@ -58,7 +58,7 @@ class Cast {
   String? department;
   String? job;
 
-// *****metodo que se crea para obtener la imagen del actorç
+// *****this method was created for get actor picture
   get fullProfilePath {
     if (this.profilePath != null)
       return 'https://image.tmdb.org/t/p/w500${this.profilePath}';
