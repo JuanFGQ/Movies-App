@@ -39,9 +39,7 @@ class CastingCards extends StatelessWidget {
               itemCount: cast.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (_, int index) => _CastCard(cast[index])),
-          //****AQUI SE PONE ESTO CON
-          //****REFERENCIA DE EL FINAL
-          //****DE LA LINEA 31 (cast[index]) */
+        
         );
       },
     );
