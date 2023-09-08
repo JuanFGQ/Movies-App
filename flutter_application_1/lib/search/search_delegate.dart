@@ -6,12 +6,12 @@ import 'package:provider/provider.dart';
 class MovieSearchDelegate extends SearchDelegate {
   @override
 
-  //metodo para cambiar el texto de la barra de busqueda
+//method to change the search bar text
   String get searchFieldLabel => 'Buscar pelicula';
 
   @override
   List<Widget>? buildActions(BuildContext context) {
-//metodo para agregar la x que borra lo que se escribo
+//method to add the x that deletes what was written
     return [
       IconButton(
         onPressed: () {
@@ -24,7 +24,7 @@ class MovieSearchDelegate extends SearchDelegate {
 
   @override
   Widget? buildLeading(BuildContext context) {
-    //flecha de back para salir de la busqueda
+//back arrow to exit the search
     return IconButton(
       onPressed: () {
         close(context, null);
@@ -52,9 +52,9 @@ class MovieSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    /*aca nos preguntamos si la busqueda esta vacia
-    entonces coloca el icon centradO con el color y el 
-    tamaño asiganados abajo*/
+/*here we wonder if the search is empty
+     then place the icon centered with the color and the
+     size assigned below*/
     if (query.isEmpty) {
       return _emptyContainer();
     }
@@ -77,9 +77,9 @@ class MovieSearchDelegate extends SearchDelegate {
   }
 }
 
-// *ESTA INSTANCIA SE CREO PARA QUE CUANDO SE MUETREN LOS RESULTADOS
-// *PUEDA DAR INGRESAR A LA PANTALLA DE DETALLES...
-// *ESTO ESTA HECHO PARA PEDIR LA INFORMACION E INGRESAR A ELLA
+// *THIS INSTANCE WAS CREATED SO THAT WHEN THE RESULTS ARE SHOWN
+// *YOU CAN ENTER THE DETAILS SCREEN...
+// *THIS IS DONE TO REQUEST THE INFORMATION AND ENTER IT
 
 class _MovieItem extends StatelessWidget {
   final Movie movie;
