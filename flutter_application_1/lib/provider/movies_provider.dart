@@ -18,9 +18,10 @@ class MoviesProvider extends ChangeNotifier {
   String _language = 'es-ES';
 
 //******** these are arrangements to save the data of the created methods
-   //such as the getOnDisplayMovies and getPopularMovies methods */
+  //such as the getOnDisplayMovies and getPopularMovies methods */
   List<Movie> onDisplayMovies = [];
   List<Movie> popularMovies = [];
+  Map<int, List<Cast>> moviesCast = {};
 //****method that serves the same purpose as the one declared in lines 17 and 18 (another way to do it) */
 // the int will be the id of the movie (since it is numeric)
 //
@@ -50,13 +51,12 @@ class MoviesProvider extends ChangeNotifier {
     getOnDisplayMovies();
     getPopularMovies();
 //stream closure has to be called somewhere, it is mandatory
-
   }
 
 //*****method created to optimize the code that is repeated,
 //*****with the aim that by just calling a method we can
 //***** avoid copying more of the same/
-   /* put the argument
+  /* put the argument
                             string plus a name that
                                I assign with the objective
                                that the value of that endpoint
@@ -67,6 +67,7 @@ class MoviesProvider extends ChangeNotifier {
 
     // Await the http get response, then decode the json-formatted response.
     final response = await http.get(url);
+
     return response.body;
   }
 
@@ -81,21 +82,20 @@ class MoviesProvider extends ChangeNotifier {
 
 //*****I have to create another method that will trigger the other data that I need, which would be the popular movies */
 //******IT HAS TO BE AN ASYNCHRONOUS METHOD BECAUSE I HAVE TO MAKE HTTP REQUESTS */
-  
-  
+
   getPopularMovies() async {
 //increment is made so that when changing the page the movies are maintained
-    
+
     _popularPage++;
 
     final jsonData = await this._getJasonData('3/movie/popular', _popularPage);
     final popularResponse = PopularResponse.fromJson(jsonData);
 
-///******is deconstructed because eventually the popular movies will be called again */
-///
-     /// ***** this concatenated method takes the current movies and will always be part of the
-     /// ***** popular movies and will keep the movies even if they change pages
-    
+    ///******is deconstructed because eventually the popular movies will be called again */
+    ///
+    /// ***** this concatenated method takes the current movies and will always be part of the
+    /// ***** popular movies and will keep the movies even if they change pages
+
     popularMovies = [...popularMovies, ...popularResponse.results];
     // print(popularMovies[0]);
     notifyListeners();

@@ -14,7 +14,7 @@
 //   @override
 //   Widget build(BuildContext context) {
 // //2
-//     final moviesProvider = Provider.of<MoviesProvider>(context, listen: false);
+//     // final moviesProvider = Provider.of<MoviesProvider>(context, listen: false);
 
 //     return FutureBuilder(
 //       future: moviesProvider.getMovieCast(movieId),
@@ -39,7 +39,6 @@
 //               itemCount: cast.length,
 //               scrollDirection: Axis.horizontal,
 //               itemBuilder: (_, int index) => _CastCard(cast[index])),
-        
 //         );
 //       },
 //     );
@@ -72,7 +71,7 @@
 //               fit: BoxFit.cover,
 //             ),
 //           ),
-//           SizedBox(
+//           const SizedBox(
 //             height: 5,
 //           ),
 //           Text(
