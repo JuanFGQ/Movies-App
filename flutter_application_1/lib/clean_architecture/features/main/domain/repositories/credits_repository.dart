@@ -2,5 +2,5 @@ import 'package:flutter_application_1/clean_architecture/core/resources/data_sta
 import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/credits_entity.dart';
 
 abstract class CreditsRepository {
-  Future<DataState<List<CreditsEntity>>> getMovieCredits();
+  Future<DataState<List<CastEntity>>> getMovieCredits();
 }

@@ -3,7 +3,7 @@ import 'package:flutter_application_1/clean_architecture/features/main/data/data
 import 'package:flutter_application_1/clean_architecture/features/main/data/repository/movies_api_implementation.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/domain/repositories/movie_repository.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/domain/usecases/get_article.dart';
-import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/bloc/movies_bloc.dart';
+import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/movies_bloc/movies_bloc.dart';
 import 'package:get_it/get_it.dart';
 
 final sl = GetIt.instance;

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/movie_entity.dart';
-import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/bloc/movies_bloc.dart';
-import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/bloc/movies_state.dart';
+import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/movies_bloc/movies_bloc.dart';
+import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/movies_bloc/movies_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class MovieSlider extends StatefulWidget {
