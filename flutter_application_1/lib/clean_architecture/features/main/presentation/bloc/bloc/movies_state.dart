@@ -1,4 +1,3 @@
-import 'package:dio/dio.dart';
 import 'package:equatable/equatable.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/movie_entity.dart';
 

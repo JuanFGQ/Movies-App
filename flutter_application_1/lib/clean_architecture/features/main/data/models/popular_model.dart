@@ -7,8 +7,8 @@ import 'dart:convert';
 import 'package:flutter_application_1/clean_architecture/features/main/data/models/movie_model.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/popular_entity.dart';
 
-class PopularResponse extends PopularEntity {
-  const PopularResponse({
+class PopularMoviesModel extends PopularEntity {
+  const PopularMoviesModel({
     int? page,
     List<MovieModel>? results,
     int? totalPages,
@@ -20,10 +20,11 @@ class PopularResponse extends PopularEntity {
           totalResults: totalResults,
         );
 
-  factory PopularResponse.fromJson(String str) =>
-      PopularResponse.fromMap(json.decode(str));
+  factory PopularMoviesModel.fromJson(String str) =>
+      PopularMoviesModel.fromMap(json.decode(str));
 
-  factory PopularResponse.fromMap(Map<String, dynamic> json) => PopularResponse(
+  factory PopularMoviesModel.fromMap(Map<String, dynamic> json) =>
+      PopularMoviesModel(
         page: json["page"] ?? "",
         results: List<MovieModel>.from(
             json["results"].map((x) => MovieModel.fromJson(x))),
@@ -31,8 +32,8 @@ class PopularResponse extends PopularEntity {
         totalResults: json["total_results"],
       );
 
-  factory PopularResponse.fromEntity(PopularEntity entity) {
-    return PopularResponse(
+  factory PopularMoviesModel.fromEntity(PopularEntity entity) {
+    return PopularMoviesModel(
         page: entity.page,
         results: entity.results,
         totalPages: entity.totalPages,

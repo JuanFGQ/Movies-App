@@ -1,8 +1,8 @@
 import 'package:flutter_application_1/clean_architecture/features/main/data/models/movie_model.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/search_entity.dart';
 
-class SearchResponse extends SearchEntity {
-  const SearchResponse({
+class SearchMovieModel extends SearchEntity {
+  const SearchMovieModel({
     int? page,
     List<MovieModel>? results,
     int? totalPages,
@@ -13,7 +13,8 @@ class SearchResponse extends SearchEntity {
             totalPages: totalPages,
             totalResults: totalResults);
 
-  factory SearchResponse.fromMap(Map<String, dynamic> json) => SearchResponse(
+  factory SearchMovieModel.fromJson(Map<String, dynamic> json) =>
+      SearchMovieModel(
         page: json["page"] ?? "",
         results: List<MovieModel>.from(
             json["results"].map((x) => MovieModel.fromJson(x))),
@@ -21,8 +22,8 @@ class SearchResponse extends SearchEntity {
         totalResults: json["total_results"] ?? "",
       );
 
-  factory SearchResponse.fromEntity(SearchResponse entity) {
-    return SearchResponse(
+  factory SearchMovieModel.fromEntity(SearchMovieModel entity) {
+    return SearchMovieModel(
         page: entity.page,
         results: entity.results,
         totalPages: entity.totalPages,

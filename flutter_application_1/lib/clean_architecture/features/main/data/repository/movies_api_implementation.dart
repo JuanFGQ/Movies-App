@@ -8,6 +8,7 @@ import 'package:flutter_application_1/clean_architecture/features/main/data/data
 import 'package:flutter_application_1/clean_architecture/features/main/data/models/credits_model.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/data/models/movie_model.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/data/models/popular_model.dart';
+import 'package:flutter_application_1/clean_architecture/features/main/data/models/search_model.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/credits_entity.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/popular_entity.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/search_entity.dart';
@@ -76,14 +77,24 @@ class MovieCastRepositoryImp implements CreditsRepository {
     }
   }
 }
-//  class SearchMovieRepositoryImpl implements SearchRepository{
-//   final MoviesApiService _moviesApiService;
 
-//   @override
-//   Future<DataState<List<SearchEntity>>> getSearch() {
-// final response = await _movieApiService
+class SearchMovieRepositoryImpl implements SearchRepository {
+  final MoviesApiService _moviesApiService;
 
+  SearchMovieRepositoryImpl(this._moviesApiService);
 
-//   }
+  @override
+  Future<DataState<List<SearchEntity>>> getSearch() async {
+    final response = await _moviesApiService.getSearchMovie('nemo');
 
-//   }
+    final search = (response.data['results'] as List)
+        .map((e) => SearchMovieModel.fromJson(e))
+        .toList();
+
+    if (response.statusCode == 200) {
+      return DataSuccess(search);
+    } else {
+      return DataFailed(Exception('Failed request'));
+    }
+  }
+}
