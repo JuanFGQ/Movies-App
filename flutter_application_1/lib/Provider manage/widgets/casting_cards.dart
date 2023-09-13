@@ -39,7 +39,6 @@
 //               itemCount: cast.length,
 //               scrollDirection: Axis.horizontal,
 //               itemBuilder: (_, int index) => _CastCard(cast[index])),
-        
 //         );
 //       },
 //     );

@@ -5,11 +5,10 @@ import 'package:flutter_application_1/clean_architecture/features/main/data/mode
 import 'package:flutter_application_1/clean_architecture/features/main/data/models/popular_model.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/data/models/search_model.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/credits_entity.dart';
+import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/popular_entity.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/search_entity.dart';
-import 'package:flutter_application_1/clean_architecture/features/main/domain/repositories/credits_repository.dart';
-import 'package:flutter_application_1/clean_architecture/features/main/domain/repositories/movie_repository.dart';
-import 'package:flutter_application_1/clean_architecture/features/main/domain/repositories/popular_repository.dart';
-import 'package:flutter_application_1/clean_architecture/features/main/domain/repositories/search%20repository.dart';
+
+import '../../domain/repositories/movie_repository.dart';
 
 class MoviesRepositoryImpl implements MovieRepository {
   final MoviesApiService _movieApiService;
@@ -30,16 +29,25 @@ class MoviesRepositoryImpl implements MovieRepository {
       return DataFailed(Exception('failed request status'));
     }
   }
-}
-
-class PopularMoviesRepositoryImpl implements PopularMovieRepository {
-  final MoviesApiService _moviesApiService;
-
-  PopularMoviesRepositoryImpl(this._moviesApiService);
 
   @override
-  Future<DataState<List<PopularMoviesModel>>> getPopularMovies() async {
-    final response = await _moviesApiService.getPopularMovies();
+  Future<DataState<List<CastEntity>>> getMovieCredits() async {
+    final response = await _movieApiService.getMovieCastById();
+    final credits = (response.data['results'] as List)
+        .map((data) => CastModel.fromJson(data))
+        .toList();
+
+    if (response.statusCode == 200) {
+      return DataSuccess(credits);
+    } else {
+      return DataFailed(Exception('Failed request'));
+    }
+//
+  }
+
+  @override
+  Future<DataState<List<PopularEntity>>> getPopularMovies() async {
+    final response = await _movieApiService.getPopularMovies();
     final popular = (response.data['results'] as List)
         .map((data) => PopularMoviesModel.fromJson(data))
         .toList();
@@ -50,36 +58,10 @@ class PopularMoviesRepositoryImpl implements PopularMovieRepository {
       return DataFailed(Exception('Failed request'));
     }
   }
-}
-
-class MovieCastRepositoryImp implements CreditsRepository {
-  final MoviesApiService _moviesApiService;
-
-  MovieCastRepositoryImp(this._moviesApiService);
-
-  @override
-  Future<DataState<List<CastEntity>>> getMovieCredits() async {
-    final response = await _moviesApiService.getMovieCastById(1);
-    final credits = (response.data['results'] as List)
-        .map((data) => CastModel.fromJson(data))
-        .toList();
-
-    if (response.statusCode == 200) {
-      return DataSuccess(credits);
-    } else {
-      return DataFailed(Exception('Failed request'));
-    }
-  }
-}
-
-class SearchMovieRepositoryImpl implements SearchRepository {
-  final MoviesApiService _moviesApiService;
-
-  SearchMovieRepositoryImpl(this._moviesApiService);
 
   @override
   Future<DataState<List<SearchEntity>>> getSearch() async {
-    final response = await _moviesApiService.getSearchMovie('nemo');
+    final response = await _movieApiService.getSearchMovie('nemo');
 
     final search = (response.data['results'] as List)
         .map((e) => SearchMovieModel.fromJson(e))
@@ -92,3 +74,64 @@ class SearchMovieRepositoryImpl implements SearchRepository {
     }
   }
 }
+
+// class PopularMoviesRepositoryImpl implements PopularMovieRepository {
+//   final MoviesApiService _moviesApiService;
+
+//   PopularMoviesRepositoryImpl(this._moviesApiService);
+
+//   @override
+//   Future<DataState<List<PopularMoviesModel>>> getPopularMovies() async {
+//     final response = await _moviesApiService.getPopularMovies();
+//     final popular = (response.data['results'] as List)
+//         .map((data) => PopularMoviesModel.fromJson(data))
+//         .toList();
+
+//     if (response.statusCode == 200) {
+//       return DataSuccess(popular);
+//     } else {
+//       return DataFailed(Exception('Failed request'));
+//     }
+//   }
+// }
+
+// class MovieCastRepositoryImp implements CastRepository {
+//   final MoviesApiService _moviesApiService;
+
+//   MovieCastRepositoryImp(this._moviesApiService);
+
+//   @override
+//   Future<DataState<List<CastEntity>>> getMovieCredits() async {
+//     final response = await _moviesApiService.getMovieCastById(1);
+//     final credits = (response.data['results'] as List)
+//         .map((data) => CastModel.fromJson(data))
+//         .toList();
+
+//     if (response.statusCode == 200) {
+//       return DataSuccess(credits);
+//     } else {
+//       return DataFailed(Exception('Failed request'));
+//     }
+//   }
+// }
+
+// class SearchMovieRepositoryImpl implements SearchRepository {
+//   final MoviesApiService _moviesApiService;
+
+//   SearchMovieRepositoryImpl(this._moviesApiService);
+
+//   @override
+//   Future<DataState<List<SearchEntity>>> getSearch() async {
+//     final response = await _moviesApiService.getSearchMovie('nemo');
+
+//     final search = (response.data['results'] as List)
+//         .map((e) => SearchMovieModel.fromJson(e))
+//         .toList();
+
+//     if (response.statusCode == 200) {
+//       return DataSuccess(search);
+//     } else {
+//       return DataFailed(Exception('Failed request'));
+//     }
+//   }
+// }

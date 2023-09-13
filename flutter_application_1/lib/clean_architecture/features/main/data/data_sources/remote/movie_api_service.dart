@@ -10,7 +10,6 @@ class MoviesApiService {
 
   Future<Response<dynamic>> getMovies() async {
     // final queryParameters = <String, dynamic>{'api_key': apiKey};
-
     try {
       final response = await _dio.get(
           'https://api.themoviedb.org/3/movie/now_playing?api_key=f43317ed52d05cf71a92f42bcb0ee678');
@@ -74,7 +73,7 @@ class MoviesApiService {
   Future<Response<dynamic>> getSearchMovie(String query) async {
     try {
       final response = await _dio.get(
-          'https://api.themoviedb.org/3/search/movie?api_key=f43317ed52d05cf71a92f42bcb0ee678 $query');
+          'https://api.themoviedb.org/3/search/movie?api_key=f43317ed52d05cf71a92f42bcb0ee678&$query');
 
 //* agregarle el query
 
