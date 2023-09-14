@@ -9,7 +9,6 @@ class MoviesApiService {
   MoviesApiService(this._dio);
 
   Future<Response<dynamic>> getMovies() async {
-    // final queryParameters = <String, dynamic>{'api_key': apiKey};
     try {
       final response = await _dio.get(
           'https://api.themoviedb.org/3/movie/now_playing?api_key=f43317ed52d05cf71a92f42bcb0ee678');

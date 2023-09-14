@@ -4,14 +4,13 @@ import 'package:flutter_application_1/clean_architecture/features/main/domain/en
 
 import '../repositories/movie_repository.dart';
 
-class GetSearchMovieUseCase
-    implements UseCase<DataState<List<SearchEntity>>, void> {
+class GetSearchMovieUseCase implements UseCase<void, String> {
   final MovieRepository _searchRepository;
 
   GetSearchMovieUseCase(this._searchRepository);
 
   @override
-  Future<DataState<List<SearchEntity>>> call({void params}) {
-    return _searchRepository.getSearch();
+  Future<void> call({String? params}) {
+    return _searchRepository.getSearch(params!);
   }
 }

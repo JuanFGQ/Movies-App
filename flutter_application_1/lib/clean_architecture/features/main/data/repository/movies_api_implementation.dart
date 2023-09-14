@@ -31,8 +31,8 @@ class MoviesRepositoryImpl implements MovieRepository {
   }
 
   @override
-  Future<DataState<List<CastEntity>>> getMovieCredits() async {
-    final response = await _movieApiService.getMovieCastById();
+  Future<DataState<List<CastEntity>>> getMovieCredits(int id) async {
+    final response = await _movieApiService.getMovieCastById(id);
     final credits = (response.data['results'] as List)
         .map((data) => CastModel.fromJson(data))
         .toList();
@@ -60,8 +60,8 @@ class MoviesRepositoryImpl implements MovieRepository {
   }
 
   @override
-  Future<DataState<List<SearchEntity>>> getSearch() async {
-    final response = await _movieApiService.getSearchMovie('nemo');
+  Future<DataState<List<SearchEntity>>> getSearch(String searc) async {
+    final response = await _movieApiService.getSearchMovie(searc);
 
     final search = (response.data['results'] as List)
         .map((e) => SearchMovieModel.fromJson(e))
