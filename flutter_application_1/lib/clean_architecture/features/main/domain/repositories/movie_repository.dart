@@ -10,7 +10,7 @@ abstract class MovieRepository {
 
   Future<DataState<List<PopularEntity>>> getPopularMovies();
 
-  Future<void> getMovieCredits(int id);
+  Future<List<CastEntity>> getActorCast(int id);
 
-  Future<void> getSearch(String search);
+  Future<List<SearchEntity>> getSearch(String search);
 }

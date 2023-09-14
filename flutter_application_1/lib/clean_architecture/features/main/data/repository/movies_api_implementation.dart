@@ -30,8 +30,9 @@ class MoviesRepositoryImpl implements MovieRepository {
     }
   }
 
+//ver como agregar Data State
   @override
-  Future<DataState<List<CastEntity>>> getMovieCredits(int id) async {
+  Future<DataState<List<CastEntity>>> getActorCast(int id) async {
     final response = await _movieApiService.getMovieCastById(id);
     final credits = (response.data['results'] as List)
         .map((data) => CastModel.fromJson(data))
