@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/movies_bloc/movies_bloc.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/movies_bloc/movies_state.dart';
+import 'package:flutter_application_1/clean_architecture/features/main/presentation/pages/search_delegate.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/widgets/widgets_butterfile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,11 +11,27 @@ class InitialPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: _buildBody(),
+      appBar: AppBar(
+        title: const Text('Peliculas en cines'),
+        elevation: 5,
+        actions: [
+          IconButton(
+            icon: const Icon(Icons.search_outlined),
+            onPressed: () =>
+                showSearch(context: context, delegate: MovieSearchDelegate()),
+          ),
+        ],
+      ),
+      body: const _Body(),
     );
   }
+}
 
-  _buildBody() {
+class _Body extends StatelessWidget {
+  const _Body({Key? key}) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
     return BlocBuilder<RemoteMoviesBloc, RemoteMoviesState>(
         builder: (_, state) {
       if (state is RemoteMoviesLoading) {
@@ -28,9 +45,7 @@ class InitialPage extends StatelessWidget {
           child: Column(
             children: [
               CardSwiper(movies: state.movies),
-              // MovieSlider(
-              //   movies: null,
-              // )
+              PopularMoviesSlider(),
             ],
           ),
         );

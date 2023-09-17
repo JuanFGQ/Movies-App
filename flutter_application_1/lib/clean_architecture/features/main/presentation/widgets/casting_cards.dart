@@ -1,9 +1,10 @@
 // import 'package:flutter/cupertino.dart';
-// import 'package:flutter/material.dart';
-// import 'package:flutter_application_1/models/models.dart';
-// import 'package:flutter_application_1/provider/movies_provider.dart';
+// import 'package:flutter_bloc/flutter_bloc.dart';
 
-// import 'package:provider/provider.dart';
+// import '../../domain/entities/credits_entity.dart';
+// import '../bloc/actors_cast_bloc/bloc/actor_cast_bloc.dart';
+// import '../bloc/actors_cast_bloc/bloc/actor_cast_state.dart';
+// import 'loading_widget.dart';
 
 // class CastingCards extends StatelessWidget {
 //   //
@@ -16,46 +17,45 @@
 // //2
 //     // final moviesProvider = Provider.of<MoviesProvider>(context, listen: false);
 
-//     return FutureBuilder(
-//       future: moviesProvider.getMovieCast(movieId),
-//       builder: (_, AsyncSnapshot<List<Cast>> snapshot) {
-//         //
-//         if (!snapshot.hasData) {
-//           return Container(
-//             constraints: BoxConstraints(maxWidth: 150),
-//             height: 180,
-//             child: CupertinoActivityIndicator(),
-//           );
-//         }
-
-//         final List<Cast> cast = snapshot.data!;
-
+//     return BlocBuilder<ActorsCastBloc, ActorCastState>(
+//         builder: (context, state) {
+//       if (state is ActorCastLoading) {
+//         return LoadingWidget();
+//       }
+//       if (state is ActorCastDone) {
 //         return Container(
-//           margin: EdgeInsets.only(bottom: 30),
+//           margin: const EdgeInsets.only(bottom: 30),
 //           width: double.infinity,
 //           height: 200,
 //           //color: Colors.red,
 //           child: ListView.builder(
-//               itemCount: cast.length,
+//               itemCount: state.actorsCast!.length,
 //               scrollDirection: Axis.horizontal,
 //               itemBuilder: (_, int index) => _CastCard(cast[index])),
 //         );
-//       },
-//     );
+//       }
+//     });
 //   }
 // }
+
+// //   return Container(
+// //     constraints: const BoxConstraints(maxWidth: 150),
+// //     height: 180,
+// //     child: const CupertinoActivityIndicator(),
+// //   );
+
+// // final List<Cast> cast = snapshot.data!;
 
 // class _CastCard extends StatelessWidget {
 // //
 
-//   final Cast actor;
-
+//   final CastEntity actor;
 //   const _CastCard(this.actor);
 
 //   @override
 //   Widget build(BuildContext context) {
 //     return Container(
-//       margin: EdgeInsets.symmetric(horizontal: 10),
+//       margin: const EdgeInsets.symmetric(horizontal: 10),
 //       width: 110,
 //       height: 110,
 //       //color: Colors.amber,
@@ -64,7 +64,7 @@
 //           ClipRRect(
 //             borderRadius: BorderRadius.circular(20),
 //             child: FadeInImage(
-//               placeholder: AssetImage('assets/no-image.jpg'),
+//               placeholder: const AssetImage('assets/no-image.jpg'),
 //               image: NetworkImage(actor.fullProfilePath),
 //               height: 140,
 //               width: 100,
@@ -75,7 +75,7 @@
 //             height: 5,
 //           ),
 //           Text(
-//             actor.name,
+//             actor.name!,
 //             maxLines: 3,
 //             overflow: TextOverflow.ellipsis,
 //             textAlign: TextAlign.center,

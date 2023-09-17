@@ -16,8 +16,6 @@
 // }
 
 // class _MovieSliderState extends State<MovieSlider> {
-
-
 //   final ScrollController scrollController = new ScrollController();
 
 //   @override
@@ -42,11 +40,9 @@
 //     return Container(
 //       width: double.infinity,
 //       height: 300,
-   
 //       child: Column(
 //         crossAxisAlignment: CrossAxisAlignment.start,
 //         children: [
-
 //           if (this.widget.title != null)
 //             Padding(
 //               padding: const EdgeInsets.symmetric(horizontal: 10),
@@ -62,7 +58,6 @@
 //           Expanded(
 //             child: ListView.builder(
 //               controller: scrollController,
-            
 //               scrollDirection: Axis.horizontal,
 //               itemCount: widget.movies.length,
 //               itemBuilder: (_, int index) => _MoviePoster(widget.movies[index],

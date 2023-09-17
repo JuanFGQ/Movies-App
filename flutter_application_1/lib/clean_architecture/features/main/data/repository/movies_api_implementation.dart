@@ -47,10 +47,10 @@ class MoviesRepositoryImpl implements MovieRepository {
   }
 
   @override
-  Future<DataState<List<PopularEntity>>> getPopularMovies() async {
+  Future<DataState<List<PopularMovieEntity>>> getPopularMovies() async {
     final response = await _movieApiService.getPopularMovies();
     final popular = (response.data['results'] as List)
-        .map((data) => PopularMoviesModel.fromJson(data))
+        .map((data) => PopularMovieModel.fromJson(data))
         .toList();
 
     if (response.statusCode == 200) {
@@ -75,64 +75,3 @@ class MoviesRepositoryImpl implements MovieRepository {
     }
   }
 }
-
-// class PopularMoviesRepositoryImpl implements PopularMovieRepository {
-//   final MoviesApiService _moviesApiService;
-
-//   PopularMoviesRepositoryImpl(this._moviesApiService);
-
-//   @override
-//   Future<DataState<List<PopularMoviesModel>>> getPopularMovies() async {
-//     final response = await _moviesApiService.getPopularMovies();
-//     final popular = (response.data['results'] as List)
-//         .map((data) => PopularMoviesModel.fromJson(data))
-//         .toList();
-
-//     if (response.statusCode == 200) {
-//       return DataSuccess(popular);
-//     } else {
-//       return DataFailed(Exception('Failed request'));
-//     }
-//   }
-// }
-
-// class MovieCastRepositoryImp implements CastRepository {
-//   final MoviesApiService _moviesApiService;
-
-//   MovieCastRepositoryImp(this._moviesApiService);
-
-//   @override
-//   Future<DataState<List<CastEntity>>> getMovieCredits() async {
-//     final response = await _moviesApiService.getMovieCastById(1);
-//     final credits = (response.data['results'] as List)
-//         .map((data) => CastModel.fromJson(data))
-//         .toList();
-
-//     if (response.statusCode == 200) {
-//       return DataSuccess(credits);
-//     } else {
-//       return DataFailed(Exception('Failed request'));
-//     }
-//   }
-// }
-
-// class SearchMovieRepositoryImpl implements SearchRepository {
-//   final MoviesApiService _moviesApiService;
-
-//   SearchMovieRepositoryImpl(this._moviesApiService);
-
-//   @override
-//   Future<DataState<List<SearchEntity>>> getSearch() async {
-//     final response = await _moviesApiService.getSearchMovie('nemo');
-
-//     final search = (response.data['results'] as List)
-//         .map((e) => SearchMovieModel.fromJson(e))
-//         .toList();
-
-//     if (response.statusCode == 200) {
-//       return DataSuccess(search);
-//     } else {
-//       return DataFailed(Exception('Failed request'));
-//     }
-//   }
-// }

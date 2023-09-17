@@ -32,7 +32,7 @@ class MoviesApiService {
   Future<Response<dynamic>> getPopularMovies() async {
     try {
       final response = await _dio.get(
-          'https://api.themoviedb.org/3/movie/now_playing?api_key=f43317ed52d05cf71a92f42bcb0ee678');
+          'https://api.themoviedb.org/3/movie/popular?api_key=f43317ed52d05cf71a92f42bcb0ee678');
       if (response.statusCode == 200) {
         return response;
       } else {
@@ -43,7 +43,6 @@ class MoviesApiService {
       if (e is SocketException) {
         throw DataFailed(e);
       } else {
-        print(e);
         throw DataFailed(Exception('Failed to get popular movies $e'));
       }
     }
@@ -72,9 +71,7 @@ class MoviesApiService {
   Future<Response<dynamic>> getSearchMovie(String query) async {
     try {
       final response = await _dio.get(
-          'https://api.themoviedb.org/3/search/movie?api_key=f43317ed52d05cf71a92f42bcb0ee678&$query');
-
-//* agregarle el query
+          'https://api.themoviedb.org/3/search/movie?api_key=f43317ed52d05cf71a92f42bcb0ee678&query=$query');
 
       if (response.statusCode == 200) {
         return response;

@@ -22,7 +22,7 @@ class RemoteMoviesBloc extends Bloc<RemoteMoviesEvent, RemoteMoviesState> {
     }
 
     if (dataState is DataFailed) {
-      emit(RemoteMoviesError(state.error!));
+      emit(RemoteMoviesError(dataState.error!));
     }
   }
 }

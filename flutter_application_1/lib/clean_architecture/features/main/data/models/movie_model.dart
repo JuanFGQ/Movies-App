@@ -2,7 +2,7 @@ import 'package:flutter_application_1/clean_architecture/features/main/domain/en
 
 class MovieModel extends MovieEntity {
   const MovieModel({
-    String? heroId,
+    // String? heroId,
     bool? adult,
     String? backdropPath,
     List<int>? genreIds,
@@ -19,7 +19,7 @@ class MovieModel extends MovieEntity {
     int? voteCount,
   }) : super(
             id: id,
-            heroId: heroId,
+            // heroId: heroId,
             adult: adult,
             backdropPath: backdropPath,
             genreIds: genreIds,
@@ -56,7 +56,7 @@ class MovieModel extends MovieEntity {
   factory MovieModel.fromEnitity(MovieEntity entity) {
     return MovieModel(
         id: entity.id,
-        heroId: entity.heroId,
+        // heroId: entity.heroId,
         adult: entity.adult,
         backdropPath: entity.backdropPath,
         genreIds: entity.genreIds,

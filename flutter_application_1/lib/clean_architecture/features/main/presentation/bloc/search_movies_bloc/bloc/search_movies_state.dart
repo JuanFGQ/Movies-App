@@ -3,12 +3,18 @@ import 'package:flutter_application_1/clean_architecture/features/main/domain/en
 
 abstract class SearchMovieState extends Equatable {
   final List<SearchEntity>? searchResult;
-  final String? query;
+  // final String? query;
 
-  const SearchMovieState({this.searchResult, this.query});
+  final Exception? error;
+
+  const SearchMovieState({
+    this.error,
+    this.searchResult,
+    // this.query
+  });
 
   @override
-  List<Object> get props => [searchResult!, query!];
+  List<Object> get props => [searchResult!, error!];
 }
 
 class SearchMovieLoading extends SearchMovieState {
@@ -16,6 +22,11 @@ class SearchMovieLoading extends SearchMovieState {
 }
 
 class SearchMovieDone extends SearchMovieState {
-  const SearchMovieDone(List<SearchEntity> searchResult, String query)
-      : super(query: query, searchResult: searchResult);
+  const SearchMovieDone(
+    List<SearchEntity> searchResult,
+  ) : super(searchResult: searchResult);
+}
+
+class SearchMovieError extends SearchMovieState {
+  const SearchMovieError(Exception error) : super(error: error);
 }

@@ -3,6 +3,6 @@ abstract class ActorCastEvent {
 }
 
 class GetActorsCast extends ActorCastEvent {
-  final int castID;
-  const GetActorsCast({required this.castID});
+  final int? castID;
+  const GetActorsCast({this.castID});
 }

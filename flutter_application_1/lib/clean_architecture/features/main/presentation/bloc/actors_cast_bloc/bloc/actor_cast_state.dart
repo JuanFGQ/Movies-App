@@ -22,6 +22,6 @@ class ActorCastDone extends ActorCastState {
       : super(actorsCast: actorsCast, id: id);
 }
 
-// class ActorCastError extends ActorCastState {
-//   const ActorCastError(Exception error) : super(error: error);
-// }
+class ActorCastError extends ActorCastState {
+  const ActorCastError(Exception error) : super(error: error);
+}

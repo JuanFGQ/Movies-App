@@ -2,8 +2,12 @@ abstract class SearchMoviesEvent {
   const SearchMoviesEvent();
 }
 
-class GetMovieByQuery extends SearchMoviesEvent {
-  final String query;
+// class GetMovieByQuery extends SearchMoviesEvent {
+//   GetMovieByQuery();
+// }
 
-  GetMovieByQuery({required this.query});
+class DebounceSearch extends SearchMoviesEvent {
+  final String? query;
+
+  DebounceSearch({this.query});
 }

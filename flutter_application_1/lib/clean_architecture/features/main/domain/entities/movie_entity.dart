@@ -15,10 +15,10 @@ class MovieEntity extends Equatable {
   final bool? video;
   final double? voteAverage;
   final int? voteCount;
-  final String? heroId;
+  // final String? heroId;
 
   const MovieEntity({
-    this.heroId,
+    // this.heroId,
     this.adult,
     this.backdropPath,
     this.genreIds,
@@ -40,7 +40,6 @@ class MovieEntity extends Equatable {
     return [
       adult,
       backdropPath,
-      // genreIds,
       id,
       originalLanguage,
       originalTitle,
@@ -54,19 +53,20 @@ class MovieEntity extends Equatable {
       voteCount,
     ];
   }
-  // get fullPosterImg {
-  //   if (posterPath != null) {
-  //     return 'https://image.tmdb.org/t/p/w500${this.posterPath}';
-  //   }
 
-  //   return 'https://i.stack.imgur.com/GNhxO.png';
-  // }
+  get fullPosterImg {
+    if (posterPath != null) {
+      return 'https://image.tmdb.org/t/p/w500${this.posterPath}';
+    }
 
-  // get fullBackdropPath {
-  //   if (backdropPath != null) {
-  //     return 'https://image.tmdb.org/t/p/w500${this.backdropPath}';
-  //   }
+    return 'https://i.stack.imgur.com/GNhxO.png';
+  }
 
-  //   return 'https://i.stack.imgur.com/GNhxO.png';
-  // }
+  get fullBackdropPath {
+    if (backdropPath != null) {
+      return 'https://image.tmdb.org/t/p/w500${this.backdropPath}';
+    }
+
+    return 'https://i.stack.imgur.com/GNhxO.png';
+  }
 }

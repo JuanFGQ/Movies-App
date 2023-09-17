@@ -4,14 +4,14 @@ import 'package:flutter_application_1/clean_architecture/features/main/domain/en
 
 import '../repositories/movie_repository.dart';
 
-class GetPopularMoviesUserCase
-    implements UseCase<DataState<List<PopularEntity>>, void> {
+class GetPopularMoviesUseCase
+    implements UseCase<DataState<List<PopularMovieEntity>>, void> {
   final MovieRepository _popularMovieRepository;
 
-  GetPopularMoviesUserCase(this._popularMovieRepository);
+  GetPopularMoviesUseCase(this._popularMovieRepository);
 
   @override
-  Future<DataState<List<PopularEntity>>> call({void params}) {
+  Future<DataState<List<PopularMovieEntity>>> call({void params}) {
     return _popularMovieRepository.getPopularMovies();
   }
 }
