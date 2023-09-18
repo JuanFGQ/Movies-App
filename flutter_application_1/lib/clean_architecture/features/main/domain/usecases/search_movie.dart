@@ -12,6 +12,6 @@ class GetSearchMovieUseCase
 
   @override
   Future<DataState<List<SearchEntity>>> call({String? params}) {
-    return _searchRepository.getSearch(params!);
+    return _searchRepository.getSearch(params ?? "");
   }
 }

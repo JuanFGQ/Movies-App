@@ -1,76 +1,77 @@
 import 'dart:async';
 
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/clean_architecture/core/resources/data_state.dart';
-import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/movie_entity.dart';
+
 import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/search_entity.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/search_movies_bloc/bloc/search_movies_bloc.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/search_movies_bloc/bloc/search_movies_event.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/search_movies_bloc/bloc/search_movies_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-class Debouncer {
-  Debouncer({required this.milliseconds});
+import '../../../../core/resources/debounce.dart';
 
-  final int milliseconds;
-  VoidCallback? action;
-  Timer? _timer;
+// class Debouncer {
+//   Debouncer({required this.milliseconds});
 
-  void run(VoidCallback action) {
-    //If a timer is send, first the previous counter must be cancelled
-    if (null != _timer) {
-      _timer?.cancel();
-    }
-    _timer = Timer(
-      Duration(milliseconds: milliseconds),
-      action,
-    );
-  }
+//   final int milliseconds;
+//   VoidCallback? action;
+//   Timer? _timer;
 
-  void cancel() => _timer?.cancel();
-}
+//   void run(VoidCallback action) {
+//     //If a timer is send, first the previous counter must be cancelled
+//     if (null != _timer) {
+//       _timer?.cancel();
+//     }
+//     _timer = Timer(
+//       Duration(milliseconds: milliseconds),
+//       action,
+//     );
+//   }
+
+//   void cancel() => _timer?.cancel();
+// }
 
 class MovieSearchDelegate extends SearchDelegate {
   final _debouncer = Debouncer(milliseconds: 4000);
   @override
   String get searchFieldLabel => 'Buscar pelicula';
 
-  // Widget buildSearchBar(BuildContext context) {
-  //   final searchBloc = BlocProvider.of<SearchMovieBloc>(context);
+// @override
+  AppBar buildAppBar(BuildContext context) {
+    final searchBloc = BlocProvider.of<SearchMovieBloc>(context);
 
-  //   return AppBar(
-  //     title: const Text('Search'),
-  //     actions: <Widget>[
-  //       IconButton(
-  //         icon: const Icon(Icons.close),
-  //         onPressed: () {
-  //           query = '';
-  //         },
-  //       ),
-  //     ],
-  //     bottom: PreferredSize(
-  //       preferredSize: Size.fromHeight(56.0),
-  //       child: TextField(
-  //         onChanged: (value) {
-  //           _debouncer.run(() {
-  //             // Aquí puedes enviar la información a tu bloc
-  //             // El código dentro de esta función se ejecutará después del retraso especificado
-  //             // y evitará que se realicen múltiples llamadas innecesarias al bloc mientras el usuario sigue escribiendo.
-  //             // Por ejemplo:
-  //             // bloc.search(query);
-  //             searchBloc.add(DebounceSearch(query: query));
-  //           });
-  //         },
-  //         decoration: const InputDecoration(
-  //           hintText: 'Search...',
-  //           border: InputBorder.none,
-  //           contentPadding: EdgeInsets.only(left: 16.0, top: 20.0),
-  //         ),
-  //       ),
-  //     ),
-  //   );
-  // }
+    return AppBar(
+      title: const Text('Search'),
+      actions: <Widget>[
+        IconButton(
+          icon: const Icon(Icons.close),
+          onPressed: () {
+            query = '';
+          },
+        ),
+      ],
+      bottom: PreferredSize(
+        preferredSize: Size.fromHeight(56.0),
+        child: TextField(
+          onChanged: (value) {
+            _debouncer.run(() {
+              // Aquí puedes enviar la información a tu bloc
+              // El código dentro de esta función se ejecutará después del retraso especificado
+              // y evitará que se realicen múltiples llamadas innecesarias al bloc mientras el usuario sigue escribiendo.
+              // Por ejemplo:
+              // bloc.search(query);
+              searchBloc.add(DebounceSearch(query: value));
+            });
+          },
+          decoration: const InputDecoration(
+            hintText: 'Search...',
+            border: InputBorder.none,
+            contentPadding: EdgeInsets.only(left: 16.0, top: 20.0),
+          ),
+        ),
+      ),
+    );
+  }
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -82,6 +83,7 @@ class MovieSearchDelegate extends SearchDelegate {
         },
         icon: Icon(Icons.clear),
       ),
+      // buildSearchBar(context)
     ];
   }
 
@@ -92,7 +94,7 @@ class MovieSearchDelegate extends SearchDelegate {
       onPressed: () {
         close(context, null);
       },
-      icon: Icon(Icons.arrow_back),
+      icon: const Icon(Icons.arrow_back),
     );
   }
 
@@ -117,12 +119,12 @@ class MovieSearchDelegate extends SearchDelegate {
     //     return _emptyContainer();
     //   }
 
-    final searchBloc = BlocProvider.of<SearchMovieBloc>(context);
+    // final searchBloc = BlocProvider.of<SearchMovieBloc>(context);
 
     //   searchBloc.add(DebounceSearch(query: query));
-    _debouncer.run(() {
-      searchBloc.add(DebounceSearch(query: query));
-    });
+    // _debouncer.run(() {
+    //   searchBloc.add(DebounceSearch(query: 'nemo'));
+    // });
 
     return BlocBuilder<SearchMovieBloc, SearchMovieState>(
         builder: (context, state) {

@@ -28,7 +28,6 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<GetMovieUseCase>(GetMovieUseCase(sl()));
   sl.registerSingleton<GetPopularMoviesUseCase>(GetPopularMoviesUseCase(sl()));
   sl.registerSingleton<GetSearchMovieUseCase>(GetSearchMovieUseCase(sl()));
-  // sl.registerSingleton<GetSearchMovieUseCase>(GetSearchMovieUseCase(sl()));
 
   sl.registerSingleton<GetActorsCastUseCase>(GetActorsCastUseCase(sl()));
 

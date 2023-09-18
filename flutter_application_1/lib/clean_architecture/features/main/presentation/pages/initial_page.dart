@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/movies_bloc/movies_bloc.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/movies_bloc/movies_state.dart';
+import 'package:flutter_application_1/clean_architecture/features/main/presentation/pages/handmade_search_page.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/pages/search_delegate.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/widgets/widgets_butterfile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,10 +17,14 @@ class InitialPage extends StatelessWidget {
         elevation: 5,
         actions: [
           IconButton(
-            icon: const Icon(Icons.search_outlined),
-            onPressed: () =>
-                showSearch(context: context, delegate: MovieSearchDelegate()),
-          ),
+              icon: const Icon(Icons.search_outlined),
+              onPressed: () {
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            const HandMadeSearchDelegate()));
+              }),
         ],
       ),
       body: const _Body(),

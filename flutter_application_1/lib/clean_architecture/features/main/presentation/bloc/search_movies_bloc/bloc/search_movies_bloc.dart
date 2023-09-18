@@ -11,7 +11,7 @@ import '../../../../../../core/resources/debounce.dart';
 
 class SearchMovieBloc extends Bloc<SearchMoviesEvent, SearchMovieState> {
   final GetSearchMovieUseCase _getSearchMovieUseCase;
-  final debouncer = Debouncer(duration: const Duration(milliseconds: 200));
+  // final debouncer = Debouncer(milliseconds: 500);
   // final StreamController<DataState<List<SearchEntity>>>
   //     _searchResultsController = StreamController.broadcast();
 
