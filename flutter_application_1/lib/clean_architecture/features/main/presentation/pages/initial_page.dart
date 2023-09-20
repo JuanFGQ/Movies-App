@@ -19,12 +19,12 @@ class InitialPage extends StatelessWidget {
           IconButton(
               icon: const Icon(Icons.search_outlined),
               onPressed: () {
-                // Navigator.push(
-                //     context,
-                //     MaterialPageRoute(
-                //         builder: (BuildContext context) =>
-                //             const HandMadeSearchDelegate()));
-                showSearch(context: context, delegate: MovieSearchDelegate());
+                Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            const HandMadeSearchDelegate()));
+                // showSearch(context: context, delegate: MovieSearchDelegate());
               }),
         ],
       ),

@@ -32,9 +32,9 @@ class MyApp extends StatelessWidget {
         BlocProvider<RemoteMoviesBloc>(
             create: (context) => sl()..add(const GetMovies())),
         BlocProvider<ActorsCastBloc>(
-            create: (context) => sl()..add(GetActorsCast())),
+            create: (context) => sl()..add(const GetActorsCast())),
         BlocProvider<SearchMovieBloc>(
-            create: (context) => sl()..add(DebounceSearch())),
+            create: (context) => sl()..add(DebounceSearch()), lazy: false),
       ],
       child: const MaterialApp(
           debugShowCheckedModeBanner: false,
