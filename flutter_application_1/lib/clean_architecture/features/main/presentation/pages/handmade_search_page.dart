@@ -2,9 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/search_movies_bloc/bloc/search_movies_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:provider/provider.dart';
 
-import '../../../../core/resources/debounce.dart';
 import '../../domain/entities/search_entity.dart';
 import '../bloc/search_movies_bloc/bloc/search_movies_bloc.dart';
 import '../bloc/search_movies_bloc/bloc/search_movies_state.dart';
