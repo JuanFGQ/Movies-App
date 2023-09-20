@@ -24,6 +24,7 @@ class InitialPage extends StatelessWidget {
                     MaterialPageRoute(
                         builder: (BuildContext context) =>
                             const HandMadeSearchDelegate()));
+                // showSearch(context: context, delegate: MovieSearchDelegate());
               }),
         ],
       ),

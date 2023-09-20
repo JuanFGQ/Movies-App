@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/search_movies_bloc/bloc/search_movies_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -19,7 +18,8 @@ class _HandMadeSearchDelegateState extends State<HandMadeSearchDelegate> {
 
   @override
   Widget build(BuildContext context) {
-    // final _debouncer = Debouncer(milliseconds: 5000);
+    final _debouncer = Debouncer(milliseconds: 1000);
+    // final _debouncer = Debouncer(duration: const Duration(milliseconds: 500));
 
     final searchBloc = BlocProvider.of<SearchMovieBloc>(context);
 
@@ -29,12 +29,12 @@ class _HandMadeSearchDelegateState extends State<HandMadeSearchDelegate> {
           backgroundColor: Colors.white,
           title: TextField(
             onChanged: (value) {
-              // _debouncer.run(() {
-              setState(() {
-                query = value;
+              query = value;
+              _debouncer.run(() {
+                print('ONCHANGED VALUE$value');
                 searchBloc.add(DebounceSearch(query: value));
+                setState(() {});
               });
-              // });
             },
             decoration: const InputDecoration(
                 labelStyle: TextStyle(fontWeight: FontWeight.bold),
@@ -59,13 +59,10 @@ class _BuildResults extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (query.isEmpty) {
-      return const EmptyContainer(
+      return const _EmptyContainer(
         icon: Icon(Icons.desktop_access_disabled_rounded),
       );
     }
-    // return EmptyContainer(
-    //   icon: Icon(Icons.check),
-    // );
     return BlocBuilder<SearchMovieBloc, SearchMovieState>(
         builder: (context, state) {
       if (state is SearchMovieLoading) {
@@ -91,7 +88,7 @@ class _BuildSuggestions extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const EmptyContainer(
+    return const _EmptyContainer(
       icon: Icon(Icons.settings_suggest),
     );
   }
@@ -131,8 +128,34 @@ class _MovieItem extends StatelessWidget {
           ),
           Text(movie.title!)
         ],
-      ),
-    );
+      );
+    // return ListTile(
+    //   minLeadingWidth: 72.0,
+    //   leading: SizedBox(
+    //     height: 50,
+    //     width: 50,
+    //     child: Hero(
+    //       tag: movieTag,
+    //       child: (movie.fullPosterImg != null &&
+    //               movie.fullPosterImg!.startsWith('http'))
+    //           ? ClipRRect(
+    //               borderRadius: BorderRadius.circular(30),
+    //               child: FadeInImage(
+    //                 fit: BoxFit.fill,
+    //                 placeholder: const AssetImage('assets/barra_colores.gif'),
+    //                 image: NetworkImage(movie.fullPosterImg!),
+    //                 imageErrorBuilder: (context, error, stackTrace) {
+    //                   return const Image(
+    //                       fit: BoxFit.fill,
+    //                       image: AssetImage('assets/no-image.jpg'));
+    //                 },
+    //               ),
+    //             )
+    //           : const Image(
+    //               fit: BoxFit.fill, image: AssetImage('assets/no-image.jpg')),
+    //     ),
+    //   ),
+    // );
 
     // return ListTile(
     //   leading: Hero(
@@ -154,70 +177,9 @@ class _MovieItem extends StatelessWidget {
   }
 }
 
-// class _BuildSuggestions extends StatefulWidget {
-//   const _BuildSuggestions();
-
-//   @override
-//   State<_BuildSuggestions> createState() => __BuildSuggestionsState();
-// }
-
-// class __BuildSuggestionsState extends State<_BuildSuggestions> {
-//   WantedPlacesProvider? wantedPlaces;
-//   WeatherApiService? weather;
-//   NewsService? newsService;
-//   @override
-//   void initState() {
-//     wantedPlaces = Provider.of(context, listen: false);
-//     weather = Provider.of<WeatherApiService>(context, listen: false);
-//     newsService = Provider.of<NewsService>(context, listen: false);
-//     super.initState();
-//   }
-
-//   @override
-//   void dispose() {
-//     super.dispose();
-//     wantedPlaces;
-//     weather;
-//     newsService;
-//   }
-
-//   @override
-//   Widget build(BuildContext context) {
-//     final placesList = Provider.of<WantedPlacesProvider>(context);
-// //*SHOW SAVED PLACES
-//     if (placesList.places.isEmpty) {
-//       return const EmptyContainer();
-//     }
-//     final weather = Provider.of<WeatherApiService>(context);
-//     final newsService = Provider.of<NewsService>(context);
-
-//     return ListView.builder(
-//       itemCount: placesList.places.length,
-//       itemBuilder: (context, int index) {
-//         final wantedPlace = placesList.places[index];
-//         return ListTile(
-//           leading: const FaIcon(FontAwesomeIcons.clockRotateLeft),
-//           title: Text(wantedPlace.placeName),
-//           trailing: IconButton(
-//               onPressed: () {
-//                 placesList.deleteSavePlace(placesList.places[index].id!);
-//                 placesList.loadSavedPlaces();
-//               },
-//               icon: const Icon(Icons.clear)),
-//           onTap: () {
-//             newsService.activeSearch = true;
-//             weather.coords = wantedPlace.placeCoords;
-//             Navigator.pushNamed(context, 'ND');
-//           },
-//         );
-//       },
-//     );
-//   }
-// }
-
-class EmptyContainer extends StatelessWidget {
+class _EmptyContainer extends StatelessWidget {
   final Icon icon;
-  const EmptyContainer({Key? key, required this.icon}) : super(key: key);
+  const _EmptyContainer({Key? key, required this.icon}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

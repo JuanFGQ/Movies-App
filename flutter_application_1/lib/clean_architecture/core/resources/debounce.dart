@@ -18,7 +18,7 @@ import 'dart:ui';
 //   set value(T val) {
 //     _value = val;
 //     _timer?.cancel();
-//     _timer = Timer(duration, () => onValue!(_value!));
+//     _timer = Timer(duration, () => onValue!(_value as T));
 //   }
 // }
 
