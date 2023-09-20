@@ -7,11 +7,10 @@ import 'package:flutter_application_1/clean_architecture/features/main/domain/us
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/search_movies_bloc/bloc/search_movies_event.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/search_movies_bloc/bloc/search_movies_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:rxdart/rxdart.dart';
 
 class SearchMovieBloc extends Bloc<SearchMoviesEvent, SearchMovieState> {
   final GetSearchMovieUseCase _getSearchMovieUseCase;
-  final debouncer = Debouncer(duration: const Duration(milliseconds: 500));
+  // final debouncer = Debouncer(duration: const Duration(milliseconds: 500));
   final StreamController<DataState<List<SearchEntity>>>
       _searchResultsController = StreamController.broadcast();
 
@@ -20,14 +19,18 @@ class SearchMovieBloc extends Bloc<SearchMoviesEvent, SearchMovieState> {
 
   SearchMovieBloc(this._getSearchMovieUseCase)
       : super(const SearchMovieLoading()) {
-    on<DebounceSearch>(
-      getSuggestionByQuery,
-      // transformer: (events, mapper) {
-      //   return events.debounceTime(const Duration(milliseconds: 500));
-      // },
-    );
+    on<DebounceSearch>(getSuggestionByQuery);
   }
 
   FutureOr<void> getSuggestionByQuery(
-      DebounceSearch event, Emitter<SearchMovieState> emit) {}
+      DebounceSearch event, Emitter<SearchMovieState> emit) async {
+    final results = await _getSearchMovieUseCase.call(params: event.query);
+
+    if (results is DataSuccess && results.data!.isNotEmpty) {
+      emit(SearchMovieDone(results.data!));
+    }
+    if (results is DataFailed) {
+      emit(SearchMovieError(Exception('failed to load ')));
+    }
+  }
 }
