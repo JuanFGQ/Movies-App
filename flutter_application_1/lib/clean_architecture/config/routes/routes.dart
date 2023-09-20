@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/pages/initial_page.dart';
+import 'package:flutter_application_1/clean_architecture/features/main/presentation/pages/search_delegate.dart';
 
-import '../../features/main/presentation/pages/details_screen.dart';
+import '../../features/main/presentation/pages/movie_details_screen.dart';
 
 class AppRoutes {
   static Route onGenerateRoute(RouteSettings settings) {
@@ -9,8 +10,11 @@ class AppRoutes {
       case '/':
         return _materialRoute(InitialPage());
 
-      case '/detailsScreen':
-        return _materialRoute(DetailsScreen());
+      // case '/detailsScreen':
+      //   return _materialRoute(MovieDetailsScreen());
+
+      // case '/searchPage' :
+      // return _materialRoute(MovieSearchDelegate());
 
       default:
         return _materialRoute(InitialPage());

@@ -1,6 +1,6 @@
 import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/credits_entity.dart';
 
-class CastModel extends CreditsEntity {
+class CastModel extends CastEntity {
   const CastModel({
 // bool? adult;
     int? gender,
@@ -46,7 +46,7 @@ class CastModel extends CreditsEntity {
     );
   }
 
-  factory CastModel.fromEntity(CreditsEntity credits) {
+  factory CastModel.fromEntity(CastEntity credits) {
     return CastModel(
       gender: credits.gender,
       id: credits.id,

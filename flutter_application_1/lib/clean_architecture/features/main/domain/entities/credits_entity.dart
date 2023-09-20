@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 
-class CreditsEntity extends Equatable {
+class CastEntity extends Equatable {
   final bool? adult;
   final int? gender;
   final int? id;
@@ -15,7 +15,7 @@ class CreditsEntity extends Equatable {
   final String? department;
   final String? job;
 
-  const CreditsEntity({
+  const CastEntity({
     this.adult,
     this.gender,
     this.id,
