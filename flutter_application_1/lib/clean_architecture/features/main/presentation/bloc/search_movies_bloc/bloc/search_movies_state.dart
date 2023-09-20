@@ -14,7 +14,8 @@ abstract class SearchMovieState extends Equatable {
   });
 
   @override
-  List<Object> get props => [searchResult!, error!];
+  List<Object> get props =>
+      [searchResult ?? [], error ?? Exception('No error Messaje')];
 }
 
 class SearchMovieLoading extends SearchMovieState {
