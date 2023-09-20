@@ -24,13 +24,20 @@ class SearchMovieBloc extends Bloc<SearchMoviesEvent, SearchMovieState> {
 
   FutureOr<void> getSuggestionByQuery(
       DebounceSearch event, Emitter<SearchMovieState> emit) async {
-    final results = await _getSearchMovieUseCase.call(params: event.query);
-
-    if (results is DataSuccess && results.data!.isNotEmpty) {
+    try {
+      final results = await _getSearchMovieUseCase.call(params: event.query);
       emit(SearchMovieDone(results.data!));
-    }
-    if (results is DataFailed) {
+    } catch (e) {
       emit(SearchMovieError(Exception('failed to load ')));
     }
+
+    // final results = await _getSearchMovieUseCase.call(params: event.query);
+
+    // if (results is DataSuccess && results.data!.isNotEmpty) {
+    //   emit(SearchMovieDone(results.data!));
+    // }
+    // if (results is DataFailed) {
+    //   emit(SearchMovieError(Exception('failed to load ')));
+    // }
   }
 }
