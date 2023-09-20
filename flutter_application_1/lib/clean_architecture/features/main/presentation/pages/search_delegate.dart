@@ -8,6 +8,7 @@ import 'package:flutter_application_1/clean_architecture/features/main/presentat
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/search_movies_bloc/bloc/search_movies_state.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/resources/data_state.dart';
 import '../../../../core/resources/debounce.dart';
 
 // class Debouncer {
@@ -32,46 +33,46 @@ import '../../../../core/resources/debounce.dart';
 // }
 
 class MovieSearchDelegate extends SearchDelegate {
-  final _debouncer = Debouncer(milliseconds: 4000);
+  // final _debouncer = Debouncer(milliseconds: 4000);
   @override
   String get searchFieldLabel => 'Buscar pelicula';
 
 // @override
-  AppBar buildAppBar(BuildContext context) {
-    final searchBloc = BlocProvider.of<SearchMovieBloc>(context);
+  // AppBar buildAppBar(BuildContext context) {
+  //   final searchBloc = BlocProvider.of<SearchMovieBloc>(context);
 
-    return AppBar(
-      title: const Text('Search'),
-      actions: <Widget>[
-        IconButton(
-          icon: const Icon(Icons.close),
-          onPressed: () {
-            query = '';
-          },
-        ),
-      ],
-      bottom: PreferredSize(
-        preferredSize: Size.fromHeight(56.0),
-        child: TextField(
-          onChanged: (value) {
-            _debouncer.run(() {
-              // Aquí puedes enviar la información a tu bloc
-              // El código dentro de esta función se ejecutará después del retraso especificado
-              // y evitará que se realicen múltiples llamadas innecesarias al bloc mientras el usuario sigue escribiendo.
-              // Por ejemplo:
-              // bloc.search(query);
-              searchBloc.add(DebounceSearch(query: value));
-            });
-          },
-          decoration: const InputDecoration(
-            hintText: 'Search...',
-            border: InputBorder.none,
-            contentPadding: EdgeInsets.only(left: 16.0, top: 20.0),
-          ),
-        ),
-      ),
-    );
-  }
+  //   return AppBar(
+  //     title: const Text('Search'),
+  //     actions: <Widget>[
+  //       IconButton(
+  //         icon: const Icon(Icons.close),
+  //         onPressed: () {
+  //           query = '';
+  //         },
+  //       ),
+  //     ],
+  //     bottom: PreferredSize(
+  //       preferredSize: Size.fromHeight(56.0),
+  //       child: TextField(
+  //         onChanged: (value) {
+  //           _debouncer.run(() {
+  //             // Aquí puedes enviar la información a tu bloc
+  //             // El código dentro de esta función se ejecutará después del retraso especificado
+  //             // y evitará que se realicen múltiples llamadas innecesarias al bloc mientras el usuario sigue escribiendo.
+  //             // Por ejemplo:
+  //             // bloc.search(query);
+  //             searchBloc.add(DebounceSearch(query: value));
+  //           });
+  //         },
+  //         decoration: const InputDecoration(
+  //           hintText: 'Search...',
+  //           border: InputBorder.none,
+  //           contentPadding: EdgeInsets.only(left: 16.0, top: 20.0),
+  //         ),
+  //       ),
+  //     ),
+  //   );
+  // }
 
   @override
   List<Widget>? buildActions(BuildContext context) {
@@ -100,7 +101,7 @@ class MovieSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildResults(BuildContext context) {
-    return Text('results');
+    return const Text('results');
   }
 
   Widget _emptyContainer() {
@@ -115,28 +116,39 @@ class MovieSearchDelegate extends SearchDelegate {
 
   @override
   Widget buildSuggestions(BuildContext context) {
-    //   if (query.isEmpty) {
-    //     return _emptyContainer();
-    //   }
+    if (query.isEmpty) {
+      return _emptyContainer();
+    }
 
-    // final searchBloc = BlocProvider.of<SearchMovieBloc>(context);
+    final searchBloc = BlocProvider.of<SearchMovieBloc>(context);
 
-    //   searchBloc.add(DebounceSearch(query: query));
+    searchBloc.add(DebounceSearch(query: query));
     // _debouncer.run(() {
     //   searchBloc.add(DebounceSearch(query: 'nemo'));
-    // });
+    // }
 
-    return BlocBuilder<SearchMovieBloc, SearchMovieState>(
-        builder: (context, state) {
-      if (state is SearchMovieDone) {
-        final results = state.searchResult;
-        return ListView.builder(
-            itemCount: results!.length,
-            itemBuilder: (_, int index) => _MovieItem(results[index]));
-      } else {
-        return const Center(child: CircularProgressIndicator());
-      }
-    });
+    return StreamBuilder<DataState<List<SearchEntity>>>(
+        stream: searchBloc.resultsStream,
+        builder: (context, snapshot) {
+          if (snapshot.connectionState == ConnectionState.waiting) {
+            return const CircularProgressIndicator();
+          } else if (snapshot.hasError) {
+            return Text('Error: ${snapshot.error}');
+          } else if (snapshot.hasData) {
+            final movies = snapshot.data!.data;
+            // searchBloc.add(SearchMovieDone(movies));
+
+            if (movies!.isEmpty) {
+              return _emptyContainer();
+            }
+
+            return ListView.builder(
+                itemCount: movies.length,
+                itemBuilder: (_, int index) => _MovieItem(movies[index]));
+          } else {
+            return _emptyContainer();
+          }
+        });
   }
 }
 
