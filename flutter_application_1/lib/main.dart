@@ -34,7 +34,7 @@ class MyApp extends StatelessWidget {
         BlocProvider<ActorsCastBloc>(
             create: (context) => sl()..add(const GetActorsCast())),
         BlocProvider<SearchMovieBloc>(
-            create: (context) => sl()..add(DebounceSearch()), lazy: false),
+            create: (context) => sl()..add(DebounceSearch())),
       ],
       child: const MaterialApp(
           debugShowCheckedModeBanner: false,
