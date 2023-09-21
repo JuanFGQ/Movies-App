@@ -26,7 +26,9 @@ class SearchMovieBloc extends Bloc<SearchMoviesEvent, SearchMovieState> {
       DebounceSearch event, Emitter<SearchMovieState> emit) async {
     try {
       final results = await _getSearchMovieUseCase.call(params: event.query);
-      emit(SearchMovieDone(results.data!));
+      if (results is DataSuccess && results.data!.isNotEmpty) {
+        emit(SearchMovieDone(results.data!));
+      }
     } catch (e) {
       emit(SearchMovieError(Exception('failed to load ')));
     }
