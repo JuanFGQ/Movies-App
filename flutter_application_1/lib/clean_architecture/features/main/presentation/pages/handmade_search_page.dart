@@ -1,7 +1,9 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/search_movies_bloc/bloc/search_movies_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../../../../core/resources/debounce.dart';
 import '../../domain/entities/search_entity.dart';
 import '../bloc/search_movies_bloc/bloc/search_movies_bloc.dart';
 import '../bloc/search_movies_bloc/bloc/search_movies_state.dart';
@@ -104,31 +106,32 @@ class _MovieItem extends StatelessWidget {
     // final movieTag = 'search-${movie.id}';
 
     return Container(
-      color: Colors.red,
-      margin: EdgeInsets.all(20),
-      width: double.infinity,
-      // height: 20,
-      child: Column(
-        children: [
-          Container(
-            height: 80,
-            width: 80,
-            child: (movie.fullPosterImg != null &&
-                    movie.fullPosterImg!.startsWith('http'))
-                ? ClipRRect(
-                    borderRadius: BorderRadius.circular(30),
-                    child: FadeInImage(
-                        fit: BoxFit.fill,
-                        placeholder:
-                            const AssetImage('assets/barra_colores.gif'),
-                        image: NetworkImage(movie.fullPosterImg!)),
-                  )
-                : const Image(
-                    fit: BoxFit.fill, image: AssetImage('assets/no-image.jpg')),
-          ),
-          Text(movie.title!)
-        ],
-      );
+        color: Colors.red,
+        margin: EdgeInsets.all(20),
+        width: double.infinity,
+        // height: 20,
+        child: Column(
+          children: [
+            SizedBox(
+              height: 80,
+              width: 80,
+              child: (movie.fullPosterImg != null &&
+                      movie.fullPosterImg!.startsWith('http'))
+                  ? ClipRRect(
+                      borderRadius: BorderRadius.circular(30),
+                      child: CachedNetworkImage(
+                          imageUrl: movie.posterPath!,
+                          placeholder: (context, url) =>
+                              const CircularProgressIndicator(),
+                          errorWidget: (context, url, error) =>
+                              const Icon(Icons.error)))
+                  : const Image(
+                      fit: BoxFit.fill,
+                      image: AssetImage('assets/no-image.jpg')),
+            ),
+            Text(movie.title!)
+          ],
+        ));
     // return ListTile(
     //   minLeadingWidth: 72.0,
     //   leading: SizedBox(
