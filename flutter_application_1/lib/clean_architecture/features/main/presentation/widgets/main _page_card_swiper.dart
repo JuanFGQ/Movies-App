@@ -11,11 +11,7 @@ class CardSwiper extends StatelessWidget {
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
 
-    ///***this is to solve the error that appeared when it was just loading
-    ///****the image...what is done is to create a loading circle so that the image cannot be seen
-    ///****red screen....this is created before creating the widget */ */
     if (movies!.isEmpty) {
-      ///****this says: if the length(length) of the movies is 0 show the load cycle */
       return SizedBox(
         width: double.infinity,
         height: size.height * 0.5,
@@ -40,8 +36,8 @@ class CardSwiper extends StatelessWidget {
           final movieTag = 'swiper-${movie.id}';
 
           return GestureDetector(
-            onTap: () =>
-                Navigator.pushNamed(context, 'details', arguments: movie),
+            onTap: () => Navigator.pushNamed(context, '/detailsScreen',
+                arguments: movie),
             child: Hero(
               tag: movieTag,
               child: ClipRRect(
