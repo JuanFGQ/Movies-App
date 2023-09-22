@@ -1,52 +1,21 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter_application_1/clean_architecture/features/main/data/models/movie_model.dart';
+import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/movie_entity.dart';
 
-class PopularMovieEntity extends Equatable {
-  final bool? adult;
-  final String? backdropPath;
-  final List<int>? genreIds;
-  final int? id;
-  final String? originalTitle;
-  final String? overview;
-  final double? popularity;
-  final String? posterPath;
-  final DateTime? releaseDate;
-  final String? title;
-  final bool? video;
-  final double? voteAverage;
-  final int? voteCount;
+class PopularResponseEntity extends Equatable {
+  final int? page;
+  //i dont know if this works. i need to test it
+  final List<MovieModel>? results;
+  final int? totalPages;
+  final int? totalResults;
 
-  const PopularMovieEntity({
-    this.adult,
-    this.backdropPath,
-    this.genreIds,
-    this.id,
-    this.originalTitle,
-    this.overview,
-    this.popularity,
-    this.posterPath,
-    this.releaseDate,
-    this.title,
-    this.video,
-    this.voteAverage,
-    this.voteCount,
+  const PopularResponseEntity({
+    this.page,
+    this.results,
+    this.totalPages,
+    this.totalResults,
   });
 
   @override
-  List<Object?> get props {
-    return [
-      adult,
-      backdropPath,
-      genreIds,
-      id,
-      originalTitle,
-      overview,
-      popularity,
-      posterPath,
-      releaseDate,
-      title,
-      video,
-      voteAverage,
-      voteCount,
-    ];
-  }
+  List<Object?> get props => [page, results, totalPages, totalResults];
 }

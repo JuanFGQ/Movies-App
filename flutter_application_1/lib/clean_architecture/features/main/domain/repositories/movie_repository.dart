@@ -8,7 +8,7 @@ import '../entities/search_entity.dart';
 abstract class MovieRepository {
   Future<DataState<List<MovieEntity>>> getMovieArticles();
 
-  Future<DataState<List<PopularMovieEntity>>> getPopularMovies();
+  Future<DataState<List<PopularResponseEntity>>> getPopularMovies();
 
   Future<DataState<List<CastEntity>>> getActorCast(int id);
 

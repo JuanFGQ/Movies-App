@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/popular_entity.dart';
 
 abstract class PopularMoviesState extends Equatable {
-  final List<PopularMovieEntity>? popularMovies;
+  final List<PopularResponseEntity>? popularMovies;
 
   final Exception? error;
 
@@ -17,7 +17,7 @@ class PopularMoviesLoading extends PopularMoviesState {
 }
 
 class PopularMoviesDone extends PopularMoviesState {
-  const PopularMoviesDone(List<PopularMovieEntity> popularMovies)
+  const PopularMoviesDone(List<PopularResponseEntity> popularMovies)
       : super(popularMovies: popularMovies);
 }
 

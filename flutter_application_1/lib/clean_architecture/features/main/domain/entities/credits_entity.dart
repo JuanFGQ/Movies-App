@@ -1,6 +1,37 @@
 import 'package:equatable/equatable.dart';
 
 class CastEntity extends Equatable {
+  final int? id;
+  final List<CastEntityDom>? cast;
+  final List<CastEntityDom>? crew;
+
+  const CastEntity({
+    this.id,
+    this.cast,
+    this.crew,
+  });
+
+  @override
+  List<Object?> get props => [id, cast, crew];
+}
+
+class CastEntityDom extends Equatable {
+  const CastEntityDom({
+    this.adult,
+    this.gender,
+    this.id,
+    this.name,
+    this.popularity,
+    this.profilePath,
+    this.originalName,
+    this.castId,
+    this.character,
+    this.creditId,
+    this.order,
+    this.department,
+    this.job,
+  });
+
   final bool? adult;
   final int? gender;
   final int? id;
@@ -15,45 +46,19 @@ class CastEntity extends Equatable {
   final String? department;
   final String? job;
 
-  const CastEntity({
-    this.adult,
-    this.gender,
-    this.id,
-    this.name,
-    this.originalName,
-    this.popularity,
-    this.profilePath,
-    this.castId,
-    this.character,
-    this.creditId,
-    this.order,
-    this.department,
-    this.job,
-  });
-
-  get fullProfilePath {
-    if (this.profilePath != null)
-      return 'https://image.tmdb.org/t/p/w500${this.profilePath}';
-
-    return 'https://i.stack.imgur.com/GNhxO.png';
-  }
-
   @override
-  List<Object?> get props {
-    return [
-      adult,
-      gender,
-      id,
-      name,
-      originalName,
-      popularity,
-      profilePath,
-      castId,
-      character,
-      creditId,
-      order,
-      department,
-      job,
-    ];
-  }
+  List<Object?> get props => [
+        adult,
+        gender,
+        id,
+        name,
+        popularity,
+        profilePath,
+        castId,
+        character,
+        creditId,
+        order,
+        department,
+        job,
+      ];
 }

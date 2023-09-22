@@ -106,8 +106,8 @@ class _MoviePoster extends StatelessWidget {
         children: [
           //
           GestureDetector(
-            onTap: () =>
-                Navigator.pushNamed(context, 'details', arguments: movie),
+            onTap: () => Navigator.pushNamed(context, '/detailsScreen',
+                arguments: movie),
             // child:
 
             // Hero(

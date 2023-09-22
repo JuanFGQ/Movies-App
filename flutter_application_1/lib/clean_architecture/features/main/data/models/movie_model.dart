@@ -56,7 +56,6 @@ class MovieModel extends MovieEntity {
   factory MovieModel.fromEnitity(MovieEntity entity) {
     return MovieModel(
         id: entity.id,
-        // heroId: entity.heroId,
         adult: entity.adult,
         backdropPath: entity.backdropPath,
         genreIds: entity.genreIds,

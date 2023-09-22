@@ -47,10 +47,10 @@ class MoviesRepositoryImpl implements MovieRepository {
   }
 
   @override
-  Future<DataState<List<PopularMovieEntity>>> getPopularMovies() async {
+  Future<DataState<List<PopularResponseEntity>>> getPopularMovies() async {
     final response = await _movieApiService.getPopularMovies();
     final popular = (response.data['results'] as List)
-        .map((data) => PopularMovieModel.fromJson(data))
+        .map((data) => PopularResponseModel.fromJson(data))
         .toList();
 
     if (response.statusCode == 200) {
