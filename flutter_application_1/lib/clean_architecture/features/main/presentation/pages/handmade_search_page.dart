@@ -105,113 +105,66 @@ class _MovieItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     final movieTag = 'search-${movie.id}';
 
-    return Container(
-        color: Colors.red,
-        margin: EdgeInsets.all(20),
-        width: double.infinity,
-        // height: 20,
-        child: Column(
+    return GestureDetector(
+      onTap: () {
+        Navigator.pushNamed(context, '/detailsScreen', arguments: movie);
+      },
+      child: Container(
+        margin: const EdgeInsets.all(10),
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(
-              height: 80,
-              width: 80,
-              child: (movie.fullPosterImg != null &&
-                      movie.fullPosterImg!.startsWith('http'))
-                  ? ClipRRect(
-                      borderRadius: BorderRadius.circular(30),
-                      child: CachedNetworkImage(
-                          imageUrl: movie.fullPosterImg,
-                          placeholder: (context, url) =>
-                              const CircularProgressIndicator(),
-                          errorWidget: (context, url, error) =>
-                              const Icon(Icons.error)))
-                  : const Image(
-                      fit: BoxFit.fill,
-                      image: AssetImage('assets/no-image.jpg')),
+              width: size.width * 0.2,
+              child: Hero(
+                  tag: movieTag,
+                  child: (movie.fullPosterImg != null &&
+                          movie.fullPosterImg!.startsWith('http'))
+                      ? ClipRRect(
+                          borderRadius: BorderRadius.circular(30),
+                          child: CachedNetworkImage(
+                            // fit: BoxFit.cover,
+                            imageUrl: movie.fullPosterImg,
+                            placeholder: (context, url) => const Image(
+                                image: AssetImage('assets/barra_colores.gif')),
+                            errorWidget: (context, url, error) => const Image(
+                                image: AssetImage('assets/no-image.jpg')),
+                          ),
+                        )
+                      : const Image(
+                          fit: BoxFit.fill,
+                          image: AssetImage('assets/no-image.jpg'))),
             ),
-            Text(movie.title!)
+            Container(
+              width: size.width * 0.65,
+              margin: const EdgeInsets.all(10),
+              child: Column(
+                children: [
+                  Text(
+                    movie.title!,
+                    overflow: TextOverflow.clip,
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(
+                        fontSize: 15, fontWeight: FontWeight.bold),
+                  ),
+                  Text(
+                    movie.originalTitle!,
+                    overflow: TextOverflow.clip,
+                    maxLines: 2,
+                    textAlign: TextAlign.center,
+                    style: const TextStyle(fontSize: 10),
+                  ),
+                ],
+              ),
+            )
           ],
-        ));
-    // return ListTile(
-    //   minLeadingWidth: 72.0,
-    //   leading: SizedBox(
-    //     height: 50,
-    //     width: 50,
-    //     child: Hero(
-    //       tag: movieTag,
-    //       child: (movie.fullPosterImg != null &&
-    //               movie.fullPosterImg!.startsWith('http'))
-    //           ? ClipRRect(
-    //               borderRadius: BorderRadius.circular(30),
-    //               child: Image.network(movie.fullPosterImg, fit: BoxFit.cover,
-    //                   loadingBuilder: (context, child, loadingProgress) {
-    //                 if (loadingProgress == null) {
-    //                   return child;
-    //                 } else {
-    //                   return const Center(
-    //                     child: CircularProgressIndicator(
-    //                       valueColor:
-    //                           AlwaysStoppedAnimation<Color>(Colors.green),
-    //                     ),
-    //                   );
-    //                 }
-    //               }, errorBuilder: (BuildContext context, error, stackTrace) {
-    //                 return Text('No Image');
-    //               }),
-    //             )
-
-    //           // FadeInImage(
-    //           //   fit: BoxFit.fill,
-    //           //   placeholder: const AssetImage('assets/barra_colores.gif'),
-    //           //   image: NetworkImage(movie.fullPosterImg!),
-    //           //   imageErrorBuilder: (context, error, stackTrace) {
-    //           //     return const Image(
-    //           //         fit: BoxFit.fill,
-    //           //         image: AssetImage('assets/no-image.jpg'));
-    //           //   },
-    //           // ),
-    //           // )
-    //           : const Image(
-    //               fit: BoxFit.fill, image: AssetImage('assets/no-image.jpg')),
-    //     ),
-    //   ),
-    // );
-
-    // return ListTile(
-    //   leading: Hero(
-    //     tag: movieTag,
-    //     child: FadeInImage(
-    //       placeholder: const AssetImage('assets/no-image.jpg'),
-    //       image: NetworkImage((movie.posterPath != null)
-    //           ? 'https://image.tmdb.org/t/p/w500${movie.posterPath}'
-    //           : 'https://i.stack.imgur.com/GNhxO.png'),
-    //       fit: BoxFit.cover,
-    //     ),
-    //   ),
-    //   title: Text(movie.title!),
-    //   subtitle: Text(movie.originalTitle!),
-    //   onTap: () {
-    //     Navigator.pushNamed(context, 'detailsScreen', arguments: movie);
-    //   },
-    // );
-    // return ListTile(
-    //   leading: Hero(
-    //     tag: movieTag,
-    //     child: FadeInImage(
-    //       placeholder: const AssetImage('assets/no-image.jpg'),
-    //       image: NetworkImage(movie.fullPosterImg),
-    //       width: 50,
-    //       fit: BoxFit.contain,
-    //     ),
-    //   ),
-    //   title: Text(movie.title!),
-    //   subtitle: Text(movie.originalTitle!),
-    //   onTap: () {
-    //     Navigator.pushNamed(context, 'details', arguments: movie);
-    //   },
-    // );
+        ),
+      ),
+    );
   }
 }
 
@@ -221,9 +174,8 @@ class _EmptyContainer extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Center(
-      // ignore: deprecated_member_use
-      child: icon,
+    return const Center(
+      child: Image(image: AssetImage('assets/film-strip (1).gif')),
     );
   }
 }

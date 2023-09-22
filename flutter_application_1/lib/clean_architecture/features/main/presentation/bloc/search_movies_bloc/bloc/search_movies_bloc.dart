@@ -9,12 +9,6 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SearchMovieBloc extends Bloc<SearchMoviesEvent, SearchMovieState> {
   final GetSearchMovieUseCase _getSearchMovieUseCase;
-  // final debouncer = Debouncer(duration: const Duration(milliseconds: 500));
-  final StreamController<DataState<List<SearchEntity>>>
-      _searchResultsController = StreamController.broadcast();
-
-  Stream<DataState<List<SearchEntity>>> get resultsStream =>
-      _searchResultsController.stream;
 
   SearchMovieBloc(this._getSearchMovieUseCase)
       : super(const SearchMovieLoading()) {
@@ -23,7 +17,6 @@ class SearchMovieBloc extends Bloc<SearchMoviesEvent, SearchMovieState> {
 
   FutureOr<void> getSuggestionByQuery(
       DebounceSearch event, Emitter<SearchMovieState> emit) async {
-    print('DEBUGGING debounce search');
     final results = await _getSearchMovieUseCase.call(params: event.query);
     if (results is DataSuccess && results.data!.isNotEmpty) {
       emit(SearchMovieDone(results.data!));
@@ -31,10 +24,5 @@ class SearchMovieBloc extends Bloc<SearchMoviesEvent, SearchMovieState> {
     if (results is DataFailed) {
       emit(SearchMovieError(Exception('failed to load ')));
     }
-    // final results = await _getSearchMovieUseCase.call(params: event.query);
-
-    // if (results is DataSuccess && results.data!.isNotEmpty) {
-    //   emit(SearchMovieDone(results.data!));
-    // }
   }
 }
