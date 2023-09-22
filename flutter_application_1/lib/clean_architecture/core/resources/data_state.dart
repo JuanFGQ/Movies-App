@@ -7,6 +7,8 @@ abstract class DataState<T> {
 
 class DataSuccess<T> extends DataState<T> {
   const DataSuccess(T data) : super(data: data);
+
+  get statusCode => null;
 }
 
 class DataFailed<T> extends DataState<T> {

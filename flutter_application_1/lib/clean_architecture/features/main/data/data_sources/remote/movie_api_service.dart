@@ -76,13 +76,16 @@ class MoviesApiService {
       if (response.statusCode == 200) {
         return response;
       } else {
+        print('ERROR on movieApiService ${response.statusCode}');
         throw DataFailed(
             Exception('Failed to load data ${response.statusCode}'));
       }
     } catch (e) {
       if (e is SocketException) {
+        print('ERROR on movieApiService $e');
         throw DataFailed(Exception(e));
       } else {
+        print('ERROR on movieApiService $e');
         throw DataFailed(Exception('Failed to get credits $e'));
       }
     }
