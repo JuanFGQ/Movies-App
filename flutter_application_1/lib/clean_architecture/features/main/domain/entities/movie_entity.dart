@@ -15,10 +15,10 @@ class MovieEntity extends Equatable {
   final bool? video;
   final double? voteAverage;
   final int? voteCount;
-  // final String? heroId;
+  final String? heroId;
 
   const MovieEntity({
-    // this.heroId,
+    this.heroId,
     this.adult,
     this.backdropPath,
     this.genreIds,
@@ -51,6 +51,7 @@ class MovieEntity extends Equatable {
       video,
       voteAverage,
       voteCount,
+      heroId
     ];
   }
 

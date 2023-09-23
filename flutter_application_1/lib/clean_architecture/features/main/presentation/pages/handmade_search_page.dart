@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/movie_entity.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/search_movies_bloc/bloc/search_movies_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -79,7 +80,8 @@ class _BuildResults extends StatelessWidget {
         final results = state.searchResult;
         return ListView.builder(
             itemCount: results!.length,
-            itemBuilder: (_, int index) => _MovieItem(results[index]));
+            itemBuilder: (_, int index) =>
+                _MovieItem(results[index] as MovieEntity));
       } else {
         return const Center(child: CircularProgressIndicator());
       }
@@ -99,14 +101,14 @@ class _BuildSuggestions extends StatelessWidget {
 }
 
 class _MovieItem extends StatelessWidget {
-  final SearchEntity movie;
+  final MovieEntity movie;
 
   const _MovieItem(this.movie);
 
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    final movieTag = 'search-${movie.id}';
+    // final movieTag = 'search-${movie.id}';
 
     return GestureDetector(
       onTap: () {
@@ -120,7 +122,7 @@ class _MovieItem extends StatelessWidget {
             SizedBox(
               width: size.width * 0.2,
               child: Hero(
-                  tag: movieTag,
+                  tag: movie.heroId!,
                   child: (movie.fullPosterImg != null &&
                           movie.fullPosterImg!.startsWith('http'))
                       ? ClipRRect(

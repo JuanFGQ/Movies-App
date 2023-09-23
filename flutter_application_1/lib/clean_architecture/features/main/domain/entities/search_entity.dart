@@ -1,72 +1,25 @@
 import 'package:equatable/equatable.dart';
+import 'package:flutter_application_1/clean_architecture/features/main/data/models/movie_model.dart';
+import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/movie_entity.dart';
 
 class SearchEntity extends Equatable {
-  final bool? adult;
-  final String? backdropPath;
-  final List<int>? genreIds;
-  final int? id;
-  final String? originalLanguage;
-  final String? originalTitle;
-  final String? overview;
-  final double? popularity;
-  final String? posterPath;
-  final String? releaseDate;
-  final String? title;
-  final bool? video;
-  final double? voteAverage;
-  final int? voteCount;
-  // final String? heroId;
+  final int? page;
+  final List<MovieEntity>? results;
+  final int? totalPages;
+  final int? totalResults;
 
   const SearchEntity({
-    // this.heroId,
-    this.adult,
-    this.backdropPath,
-    this.genreIds,
-    this.id,
-    this.originalLanguage,
-    this.originalTitle,
-    this.overview,
-    this.popularity,
-    this.posterPath,
-    this.releaseDate,
-    this.title,
-    this.video,
-    this.voteAverage,
-    this.voteCount,
+    this.page,
+    this.results,
+    this.totalPages,
+    this.totalResults,
   });
 
   @override
-  List<Object?> get props {
-    return [
-      adult,
-      backdropPath,
-      id,
-      originalLanguage,
-      originalTitle,
-      overview,
-      popularity,
-      posterPath,
-      releaseDate,
-      title,
-      video,
-      voteAverage,
-      voteCount,
-    ];
-  }
-
-  get fullPosterImg {
-    if (posterPath != null) {
-      return 'https://image.tmdb.org/t/p/w500${this.posterPath}';
-    }
-
-    return 'https://i.stack.imgur.com/GNhxO.png';
-  }
-
-  get fullBackdropPath {
-    if (backdropPath != null) {
-      return 'https://image.tmdb.org/t/p/w500${this.backdropPath}';
-    }
-
-    return 'https://i.stack.imgur.com/GNhxO.png';
-  }
+  List<Object?> get props => [
+        page,
+        results,
+        totalPages,
+        totalResults,
+      ];
 }

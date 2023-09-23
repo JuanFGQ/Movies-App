@@ -31,7 +31,7 @@ class PopularResponseModel extends PopularResponseEntity {
   factory PopularResponseModel.fromEntity(PopularResponseEntity entity) {
     return PopularResponseModel(
       page: entity.page,
-      //if this not works check this line, maybe the error is here.
+      //if this not works check this line, maybe the error is here.entity results
       results: entity.results,
       totalPages: entity.totalPages,
       totalResults: entity.totalResults,

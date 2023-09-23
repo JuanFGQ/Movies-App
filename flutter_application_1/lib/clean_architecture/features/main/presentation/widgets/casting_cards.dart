@@ -31,7 +31,7 @@ class CastingCards extends StatelessWidget {
               itemCount: state.actorsCast!.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (_, int index) =>
-                  _CastCard(state.actorsCast![index])),
+                  _CastCard(state.actorsCast![index] as CastEntityDom)),
         );
       } else {
         return Container(
@@ -49,7 +49,7 @@ class CastingCards extends StatelessWidget {
 class _CastCard extends StatelessWidget {
 //
 
-  final CastEntity actor;
+  final CastEntityDom actor;
   const _CastCard(this.actor);
 
   @override

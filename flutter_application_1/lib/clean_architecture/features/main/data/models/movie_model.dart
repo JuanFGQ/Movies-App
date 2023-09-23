@@ -1,25 +1,24 @@
 import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/movie_entity.dart';
 
 class MovieModel extends MovieEntity {
-  const MovieModel({
-    // String? heroId,
-    bool? adult,
-    String? backdropPath,
-    List<int>? genreIds,
-    int? id,
-    String? originalLanguage,
-    String? originalTitle,
-    String? overview,
-    double? popularity,
-    String? posterPath,
-    String? releaseDate,
-    String? title,
-    bool? video,
-    double? voteAverage,
-    int? voteCount,
-  }) : super(
+  const MovieModel(
+      {bool? adult,
+      String? backdropPath,
+      List<int>? genreIds,
+      int? id,
+      String? originalLanguage,
+      String? originalTitle,
+      String? overview,
+      double? popularity,
+      String? posterPath,
+      String? releaseDate,
+      String? title,
+      bool? video,
+      double? voteAverage,
+      int? voteCount,
+      String? heroId})
+      : super(
             id: id,
-            // heroId: heroId,
             adult: adult,
             backdropPath: backdropPath,
             genreIds: genreIds,
@@ -69,5 +68,22 @@ class MovieModel extends MovieEntity {
         video: entity.video,
         voteAverage: entity.voteAverage,
         voteCount: entity.voteCount);
+  }
+  @override
+  get fullPosterImg {
+    if (posterPath != null) {
+      return 'https://image.tmdb.org/t/p/w500${posterPath}';
+    }
+
+    return 'https://i.stack.imgur.com/GNhxO.png';
+  }
+
+  @override
+  get fullBackdropPath {
+    if (backdropPath != null) {
+      return 'https://image.tmdb.org/t/p/w500${backdropPath}';
+    }
+
+    return 'https://i.stack.imgur.com/GNhxO.png';
   }
 }
