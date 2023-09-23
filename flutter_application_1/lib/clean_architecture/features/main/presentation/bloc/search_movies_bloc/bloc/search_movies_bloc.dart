@@ -1,7 +1,6 @@
 import 'dart:async';
 
 import 'package:flutter_application_1/clean_architecture/core/resources/data_state.dart';
-import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/search_entity.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/domain/usecases/search_movie.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/search_movies_bloc/bloc/search_movies_event.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/search_movies_bloc/bloc/search_movies_state.dart';

@@ -1,8 +1,9 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/search_entity.dart';
+
+import '../../../../domain/entities/movie_entity.dart';
 
 abstract class SearchMovieState extends Equatable {
-  final List<SearchEntity>? searchResult;
+  final List<MovieEntity>? searchResult;
   // final String? query;
 
   final Exception? error;
@@ -24,7 +25,7 @@ class SearchMovieLoading extends SearchMovieState {
 
 class SearchMovieDone extends SearchMovieState {
   const SearchMovieDone(
-    List<SearchEntity> searchResult,
+    List<MovieEntity> searchResult,
   ) : super(searchResult: searchResult);
 }
 

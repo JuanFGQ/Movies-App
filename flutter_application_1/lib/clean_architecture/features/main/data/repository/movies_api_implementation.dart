@@ -3,10 +3,9 @@ import 'package:flutter_application_1/clean_architecture/features/main/data/data
 import 'package:flutter_application_1/clean_architecture/features/main/data/models/credits_model.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/data/models/movie_model.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/data/models/popular_model.dart';
-import 'package:flutter_application_1/clean_architecture/features/main/data/models/search_model.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/credits_entity.dart';
+import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/movie_entity.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/popular_entity.dart';
-import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/search_entity.dart';
 
 import '../../domain/repositories/movie_repository.dart';
 
@@ -61,12 +60,14 @@ class MoviesRepositoryImpl implements MovieRepository {
   }
 
   @override
-  Future<DataState<List<SearchEntity>>> getSearch(String searc) async {
+  Future<DataState<List<MovieEntity>>> getSearch(String searc) async {
     final response = await _movieApiService.getSearchMovie(searc);
 
     final search = (response.data['results'] as List)
-        .map((e) => SearchMovieModel.fromJson(e))
+        .map((e) => MovieModel.fromJson(e))
         .toList();
+
+    print('LISTA $search');
 
     if (response.statusCode == 200) {
       return DataSuccess(search);

@@ -4,7 +4,6 @@ import 'package:flutter_application_1/clean_architecture/features/main/presentat
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../../../core/resources/debounce.dart';
-import '../../domain/entities/search_entity.dart';
 import '../bloc/search_movies_bloc/bloc/search_movies_bloc.dart';
 import '../bloc/search_movies_bloc/bloc/search_movies_state.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -21,7 +20,7 @@ class _HandMadeSearchDelegateState extends State<HandMadeSearchDelegate> {
 
   @override
   Widget build(BuildContext context) {
-    final _debouncer = Debouncer(milliseconds: 1000);
+    final _debouncer = Debouncer(milliseconds: 700);
 
     return Scaffold(
         appBar: AppBar(
@@ -80,8 +79,7 @@ class _BuildResults extends StatelessWidget {
         final results = state.searchResult;
         return ListView.builder(
             itemCount: results!.length,
-            itemBuilder: (_, int index) =>
-                _MovieItem(results[index] as MovieEntity));
+            itemBuilder: (_, int index) => _MovieItem(results[index]));
       } else {
         return const Center(child: CircularProgressIndicator());
       }
@@ -108,8 +106,7 @@ class _MovieItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final size = MediaQuery.of(context).size;
-    // final movieTag = 'search-${movie.id}';
-
+    // movie.heroId = 'search-${movie.id}';
     return GestureDetector(
       onTap: () {
         Navigator.pushNamed(context, '/detailsScreen', arguments: movie);
@@ -122,7 +119,7 @@ class _MovieItem extends StatelessWidget {
             SizedBox(
               width: size.width * 0.2,
               child: Hero(
-                  tag: movie.heroId!,
+                  tag: 'search-${movie.id}',
                   child: (movie.fullPosterImg != null &&
                           movie.fullPosterImg!.startsWith('http'))
                       ? ClipRRect(
