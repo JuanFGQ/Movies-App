@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/movies_bloc/movies_bloc.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/movies_bloc/movies_state.dart';
-import 'package:flutter_application_1/clean_architecture/features/main/presentation/pages/handmade_search_page.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/widgets/widgets_butterfile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -43,8 +42,16 @@ class _Body extends StatelessWidget {
       if (state is RemoteMoviesDone) {
         return SingleChildScrollView(
           child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               CardSwiper(movies: state.movies),
+              Container(
+                margin: const EdgeInsets.only(left: 10),
+                child: const Text(
+                  'Popular Movies',
+                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+                ),
+              ),
               PopularMoviesSlider(),
             ],
           ),
