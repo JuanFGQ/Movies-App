@@ -11,11 +11,12 @@ import '../../domain/repositories/movie_repository.dart';
 
 class MoviesRepositoryImpl implements MovieRepository {
   final MoviesApiService _movieApiService;
+  Map<int, List<CastEntityDom>> movieCast = {};
 
   MoviesRepositoryImpl(this._movieApiService);
 
   @override
-  Future<DataState<List<MovieModel>>> getMovieArticles() async {
+  Future<DataState<List<MovieEntity>>> getMovieArticles() async {
     final response = await _movieApiService.getMovies();
 
     final movies = (response.data['results'] as List)
@@ -29,15 +30,17 @@ class MoviesRepositoryImpl implements MovieRepository {
     }
   }
 
-//ver como agregar Data State
   @override
-  Future<DataState<List<CastEntity>>> getActorCast(int id) async {
+  Future<DataState<List<CastEntityDom>>> getActorCast(int id) async {
+    if (movieCast.containsKey(id)) return DataSuccess(movieCast[id]!);
+
     final response = await _movieApiService.getMovieCastById(id);
-    final credits = (response.data['results'] as List)
-        .map((data) => CastModel.fromJson(data))
+    final credits = (response.data['cast'] as List)
+        .map((data) => CastFeature.fromJson(data))
         .toList();
 
     if (response.statusCode == 200) {
+      movieCast[id] = credits;
       return DataSuccess(credits);
     } else {
       return DataFailed(Exception('Failed request'));
