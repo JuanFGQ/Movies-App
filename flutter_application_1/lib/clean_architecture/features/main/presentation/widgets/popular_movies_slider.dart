@@ -112,16 +112,19 @@ class _MoviePoster extends StatelessWidget {
 
             // Hero(
             //   tag: movie.heroId!,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(20),
-              child: FadeInImage(
-                placeholder: AssetImage('assets/no-image.jpg'),
-                image: NetworkImage((movie.posterPath != null)
-                    ? 'https://image.tmdb.org/t/p/w500${movie.posterPath}'
-                    : 'https://i.stack.imgur.com/GNhxO.png'),
-                width: 130,
-                height: 175,
-                fit: BoxFit.cover,
+            child: Hero(
+              tag: 'search-${movie.id}',
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(20),
+                child: FadeInImage(
+                  placeholder: AssetImage('assets/no-image.jpg'),
+                  image: NetworkImage((movie.posterPath != null)
+                      ? 'https://image.tmdb.org/t/p/w500${movie.posterPath}'
+                      : 'https://i.stack.imgur.com/GNhxO.png'),
+                  width: 130,
+                  height: 175,
+                  fit: BoxFit.cover,
+                ),
               ),
             ),
           ),
@@ -135,6 +138,10 @@ class _MoviePoster extends StatelessWidget {
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
           ),
+          Text(
+            movie.id.toString(),
+            style: TextStyle(fontSize: 15),
+          )
         ],
       ),
     );

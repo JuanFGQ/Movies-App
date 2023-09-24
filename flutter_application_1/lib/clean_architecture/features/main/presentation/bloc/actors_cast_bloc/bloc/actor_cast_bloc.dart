@@ -1,5 +1,3 @@
-import 'dart:async';
-
 import 'package:flutter_application_1/clean_architecture/core/resources/data_state.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/domain/usecases/get_movie_credits.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/actors_cast_bloc/bloc/actor_cast_event.dart';

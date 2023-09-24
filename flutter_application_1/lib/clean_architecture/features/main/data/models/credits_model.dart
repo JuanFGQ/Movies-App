@@ -18,9 +18,9 @@ class CastModel extends CastEntity {
   factory CastModel.fromMap(Map<String, dynamic> json) => CastModel(
         id: json["id"] ?? "",
         cast: List<CastEntityDom>.from(
-            json["cast"].map((x) => CastFeature.fromMap(x))),
+            json["cast"].map((x) => CastFeature.fromJson(x))),
         crew: List<CastEntityDom>.from(
-            json["crew"].map((x) => CastFeature.fromMap(x))),
+            json["crew"].map((x) => CastFeature.fromJson(x))),
       );
 
   factory CastModel.fromEntity(CastEntity entity) {
@@ -58,17 +58,16 @@ class CastFeature extends CastEntityDom {
             department: department,
             job: job);
 
+  @override
   get fullProfilePath {
-    if (this.profilePath != null)
+    if (profilePath != null) {
       return 'https://image.tmdb.org/t/p/w500${this.profilePath}';
+    }
 
     return 'https://i.stack.imgur.com/GNhxO.png';
   }
 
-  factory CastFeature.fromJson(String str) =>
-      CastFeature.fromMap(json.decode(str));
-
-  factory CastFeature.fromMap(Map<String, dynamic> json) => CastFeature(
+  factory CastFeature.fromJson(Map<String, dynamic> json) => CastFeature(
         adult: json["adult"] ?? "",
         gender: json["gender"] ?? "",
         id: json["id"] ?? "",

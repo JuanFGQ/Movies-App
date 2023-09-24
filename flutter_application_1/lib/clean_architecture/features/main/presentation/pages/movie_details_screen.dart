@@ -2,6 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/movie_entity.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/widgets/casting_cards.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../bloc/actors_cast_bloc/bloc/actor_cast_bloc.dart';
+import '../bloc/actors_cast_bloc/bloc/actor_cast_event.dart';
 
 class MovieDetailsScreen extends StatelessWidget {
   final MovieEntity? movie;
@@ -9,11 +13,8 @@ class MovieDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    // final MovieEntity movie =
-    //     ModalRoute.of(context)!.settings.arguments as MovieEntity;
-
-    print(movie!.title);
-
+    BlocProvider.of<ActorsCastBloc>(context)
+        .add(GetActorsCast(castID: movie!.id!));
     return Scaffold(
         body: SafeArea(
       child: CustomScrollView(
@@ -24,8 +25,8 @@ class MovieDetailsScreen extends StatelessWidget {
               _PosterAndTitle(movie!),
               _OverView(movie!),
               CastingCards(
-                movieId: movie!.id!,
-              )
+                  // movieId: movie!.id!
+                  )
             ]),
           ),
         ],
@@ -44,9 +45,6 @@ class _CustomAppBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverAppBar(
-      /*with this sliver appbar you can control the width of the appbar itself,
-       unlike the traditional appbar
-       */
       backgroundColor: Colors.amberAccent,
       expandedHeight: 200,
       floating: false,
@@ -94,7 +92,7 @@ class _PosterAndTitle extends StatelessWidget {
     final size = MediaQuery.of(context).size;
 
     return Container(
-      height: size.height * 0.1,
+      height: size.height * 0.12,
       width: size.width * 0.1,
       margin: const EdgeInsets.only(top: 20),
       padding: const EdgeInsets.symmetric(horizontal: 20),
@@ -105,7 +103,7 @@ class _PosterAndTitle extends StatelessWidget {
             child: ClipRRect(
               borderRadius: BorderRadius.circular(50),
               child: CachedNetworkImage(
-                // fit: BoxFit.cover,
+                fit: BoxFit.cover,
                 imageUrl: movie.fullPosterImg,
                 placeholder: (context, url) =>
                     const Image(image: AssetImage('assets/barra_colores.gif')),
@@ -118,7 +116,8 @@ class _PosterAndTitle extends StatelessWidget {
             width: 10,
           ),
           ConstrainedBox(
-            constraints: BoxConstraints(maxWidth: size.width - 150),
+            constraints: BoxConstraints(
+                maxWidth: size.width - 150, maxHeight: size.height - 150),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -131,7 +130,7 @@ class _PosterAndTitle extends StatelessWidget {
                 ),
                 Text(
                   movie.originalTitle!,
-                  style: Theme.of(context).textTheme.subtitle1,
+                  style: Theme.of(context).textTheme.subtitle2,
                   overflow: TextOverflow.ellipsis,
                   maxLines: 2,
                 ),

@@ -5,13 +5,13 @@ import 'package:flutter_application_1/clean_architecture/features/main/domain/re
 import '../entities/credits_entity.dart';
 
 class GetActorsCastUseCase
-    implements UseCase<DataState<List<CastEntity>>, int> {
+    implements UseCase<DataState<List<CastEntityDom>>, int> {
   final MovieRepository _creditsRepository;
 
   GetActorsCastUseCase(this._creditsRepository);
 
   @override
-  Future<DataState<List<CastEntity>>> call({int? params}) {
+  Future<DataState<List<CastEntityDom>>> call({int? params}) {
     return _creditsRepository.getActorCast(params!);
   }
 }

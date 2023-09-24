@@ -1,4 +1,7 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_application_1/clean_architecture/features/main/data/models/credits_model.dart';
+import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/actors_cast_bloc/bloc/actor_cast_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/entities/credits_entity.dart';
@@ -9,42 +12,45 @@ import 'package:cached_network_image/cached_network_image.dart';
 
 class CastingCards extends StatelessWidget {
   //
-  final int movieId;
-
-  const CastingCards({Key? key, required this.movieId}) : super(key: key);
+  // final int movieId;
+//
+  // const CastingCards({Key? key, required this.movieId}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    // BlocProvider.of<ActorsCastBloc>(context)
+    //     .add(GetActorsCast(castID: movieId));
+
 //
     return BlocBuilder<ActorsCastBloc, ActorCastState>(
         builder: (context, state) {
       if (state is ActorCastLoading) {
-        return LoadingWidget();
+        return const LoadingWidget();
       }
       if (state is ActorCastDone) {
+        // final cast = state.actorsCast;
+
         return Container(
           margin: const EdgeInsets.only(bottom: 30),
           width: double.infinity,
-          height: 200,
-          //color: Colors.red,
+          height: size.height * 0.8,
           child: ListView.builder(
               itemCount: state.actorsCast!.length,
               scrollDirection: Axis.horizontal,
               itemBuilder: (_, int index) =>
-                  _CastCard(state.actorsCast![index] as CastEntityDom)),
+                  _CastCard(state.actorsCast![index])),
         );
       } else {
         return Container(
           constraints: const BoxConstraints(maxWidth: 150),
-          height: 180,
+          height: size.height * 0.8,
           child: const CupertinoActivityIndicator(),
         );
       }
     });
   }
 }
-
-// final List<Cast> cast = snapshot.data!;
 
 class _CastCard extends StatelessWidget {
 //
@@ -54,11 +60,12 @@ class _CastCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
     return Container(
       margin: const EdgeInsets.symmetric(horizontal: 10),
-      width: 110,
-      height: 110,
-      //color: Colors.amber,
+      width: size.width * 0.3,
+      // height: 120,
+      // color: Colors.amber,
       child: Column(
         children: [
           ClipRRect(
@@ -71,23 +78,14 @@ class _CastCard extends StatelessWidget {
               errorWidget: (context, url, error) =>
                   const Image(image: AssetImage('assets/no-image.jpg')),
             ),
-            // FadeInImage(
-            // placeholder: const AssetImage('assets/no-image.jpg'),
-            // image: NetworkImage(actor.fullProfilePath),
-            // height: 140,
-            // width: 100,
-            // fit: BoxFit.cover,
-            // ),
           ),
           const SizedBox(
             height: 5,
           ),
-          Text(
-            actor.name!,
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-            textAlign: TextAlign.center,
-          ),
+          Text(actor.name!,
+              maxLines: 3,
+              overflow: TextOverflow.clip,
+              textAlign: TextAlign.center),
         ],
       ),
     );

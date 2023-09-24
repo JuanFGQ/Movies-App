@@ -21,11 +21,11 @@ class PopularResponseModel extends PopularResponseEntity {
 
   factory PopularResponseModel.fromMap(Map<String, dynamic> json) =>
       PopularResponseModel(
-        page: json["page"],
+        page: json["page"] ?? "",
         results: List<MovieModel>.from(
             json["results"].map((x) => MovieModel.fromJson(x))),
-        totalPages: json["total_pages"],
-        totalResults: json["total_results"],
+        totalPages: json["total_pages"] ?? "",
+        totalResults: json["total_results"] ?? "",
       );
 
   factory PopularResponseModel.fromEntity(PopularResponseEntity entity) {

@@ -27,6 +27,7 @@ class _HandMadeSearchDelegateState extends State<HandMadeSearchDelegate> {
           iconTheme: const IconThemeData(color: Colors.black),
           backgroundColor: Colors.white,
           title: TextField(
+            autofocus: true,
             onChanged: (value) {
               final searchBloc = BlocProvider.of<SearchMovieBloc>(context);
               final stopWatch = Stopwatch()..start();
