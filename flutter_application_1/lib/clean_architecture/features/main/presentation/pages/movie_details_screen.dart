@@ -88,36 +88,37 @@ class _PosterAndTitle extends StatelessWidget {
   Widget build(BuildContext context) {
     final movieTag = 'search-${movie.id}';
 
-    // final TextTheme textTheme = Theme.of(context).textTheme;
     final size = MediaQuery.of(context).size;
 
     return Container(
-      height: size.height * 0.12,
       width: size.width * 0.1,
       margin: const EdgeInsets.only(top: 20),
       padding: const EdgeInsets.symmetric(horizontal: 20),
       child: Row(
         children: [
-          Hero(
-            tag: movieTag,
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(50),
-              child: CachedNetworkImage(
-                fit: BoxFit.cover,
-                imageUrl: movie.fullPosterImg,
-                placeholder: (context, url) =>
-                    const Image(image: AssetImage('assets/barra_colores.gif')),
-                errorWidget: (context, url, error) =>
-                    const Image(image: AssetImage('assets/no-image.jpg')),
+          SizedBox(
+            width: size.width * 0.18,
+            height: size.height * 0.15,
+            child: Hero(
+              tag: movieTag,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(50),
+                child: CachedNetworkImage(
+                  fit: BoxFit.cover,
+                  imageUrl: movie.fullPosterImg,
+                  placeholder: (context, url) => const Image(
+                      image: AssetImage('assets/barra_colores.gif')),
+                  errorWidget: (context, url, error) =>
+                      const Image(image: AssetImage('assets/no-image.jpg')),
+                ),
               ),
             ),
           ),
           const SizedBox(
             width: 10,
           ),
-          ConstrainedBox(
-            constraints: BoxConstraints(
-                maxWidth: size.width - 150, maxHeight: size.height - 150),
+          SizedBox(
+            width: size.width * 0.68,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
