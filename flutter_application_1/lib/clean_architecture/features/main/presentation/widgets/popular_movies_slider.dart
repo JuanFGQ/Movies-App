@@ -1,27 +1,21 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/movie_entity.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/popular_movies_bloc/bloc/popular_movies_bloc.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/popular_movies_bloc/bloc/popular_movies_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../bloc/popular_movies_bloc/bloc/popular_movies_state.dart';
+import '../../domain/entities/popular_entity.dart';
 
 class PopularMoviesSlider extends StatefulWidget {
-  final List<MovieEntity> movies;
-  // final Function onNextPage;
+  final List<PopularResponseEntity> movies;
 
-  const PopularMoviesSlider({
-    Key? key,
-    required this.movies,
-    // required this.onNextPage
-  }) : super(key: key);
+  const PopularMoviesSlider({Key? key, required this.movies}) : super(key: key);
 
   @override
   State<PopularMoviesSlider> createState() => _PopularMoviesSliderState();
 }
 
 class _PopularMoviesSliderState extends State<PopularMoviesSlider> {
-  final ScrollController scrollController = new ScrollController();
+  final ScrollController scrollController = ScrollController();
 
   @override
   void initState() {
@@ -68,7 +62,7 @@ class _PopularMoviesSliderState extends State<PopularMoviesSlider> {
 
 class _MoviePoster extends StatelessWidget {
   //
-  final MovieEntity movie;
+  final PopularResponseEntity movie;
   // final String heroId;
 
   const _MoviePoster(
@@ -77,6 +71,7 @@ class _MoviePoster extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final desestrucMovieModel = movie.results;
     // movie.heroId = heroId;
 
     return Container(
@@ -94,13 +89,15 @@ class _MoviePoster extends StatelessWidget {
             // Hero(
             //   tag: movie.heroId!,
             child: Hero(
-              tag: 'search-${movie.id}',
+              tag: 'search-${desestrucMovieModel![3].toString()}',
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: FadeInImage(
                   placeholder: AssetImage('assets/no-image.jpg'),
-                  image: NetworkImage((movie.posterPath != null)
-                      ? 'https://image.tmdb.org/t/p/w500${movie.posterPath}'
+                  image: NetworkImage((desestrucMovieModel[8]
+                          .toString()
+                          .isNotEmpty)
+                      ? 'https://image.tmdb.org/t/p/w500${desestrucMovieModel![8].toString()}'
                       : 'https://i.stack.imgur.com/GNhxO.png'),
                   width: 130,
                   height: 175,
@@ -114,13 +111,13 @@ class _MoviePoster extends StatelessWidget {
           //
 
           Text(
-            movie.title!,
+            desestrucMovieModel![10].toString(),
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
           ),
           Text(
-            movie.id.toString(),
+            desestrucMovieModel![3].toString(),
             style: TextStyle(fontSize: 15),
           )
         ],
