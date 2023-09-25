@@ -1,19 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/movie_entity.dart';
-import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/movies_bloc/movies_bloc.dart';
-import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/movies_bloc/movies_state.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/popular_movies_bloc/bloc/popular_movies_bloc.dart';
+import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/popular_movies_bloc/bloc/popular_movies_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../bloc/popular_movies_bloc/bloc/popular_movies_state.dart';
 
 class PopularMoviesSlider extends StatefulWidget {
   final List<MovieEntity> movies;
-  final Function onNextPage;
+  // final Function onNextPage;
 
-  const PopularMoviesSlider(
-      {Key? key, required this.movies, required this.onNextPage})
-      : super(key: key);
+  const PopularMoviesSlider({
+    Key? key,
+    required this.movies,
+    // required this.onNextPage
+  }) : super(key: key);
 
   @override
   State<PopularMoviesSlider> createState() => _PopularMoviesSliderState();
@@ -25,11 +26,12 @@ class _PopularMoviesSliderState extends State<PopularMoviesSlider> {
   @override
   void initState() {
     super.initState();
+    final getMorePopularMovies = BlocProvider.of<PopularMoviesBloc>(context);
 
     scrollController.addListener(() {
       if (scrollController.position.pixels >=
           scrollController.position.maxScrollExtent - 500) {
-        widget.onNextPage();
+        getMorePopularMovies.add(GetPopularMovies());
       }
     });
   }
