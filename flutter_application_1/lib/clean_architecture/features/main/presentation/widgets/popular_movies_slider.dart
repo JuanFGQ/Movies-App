@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/movie_entity.dart';
-import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/popular_entity.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/movies_bloc/movies_bloc.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/movies_bloc/movies_state.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/popular_movies_bloc/bloc/popular_movies_bloc.dart';
@@ -9,12 +8,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import '../bloc/popular_movies_bloc/bloc/popular_movies_state.dart';
 
 class PopularMoviesSlider extends StatefulWidget {
-  // final MovieEntity movies;
+  final List<MovieEntity> movies;
+  final Function onNextPage;
 
-  // const PopularMoviesSlider({
-  //   Key? key,
-  //   required this.movies,
-  // }) : super(key: key);
+  const PopularMoviesSlider(
+      {Key? key, required this.movies, required this.onNextPage})
+      : super(key: key);
 
   @override
   State<PopularMoviesSlider> createState() => _PopularMoviesSliderState();
@@ -27,12 +26,12 @@ class _PopularMoviesSliderState extends State<PopularMoviesSlider> {
   void initState() {
     super.initState();
 
-    // scrollController.addListener(() {
-    //   if (scrollController.position.pixels >=
-    //       scrollController.position.maxScrollExtent - 500) {
-    //     widget.onNextPage();
-    //   }
-    // });
+    scrollController.addListener(() {
+      if (scrollController.position.pixels >=
+          scrollController.position.maxScrollExtent - 500) {
+        widget.onNextPage();
+      }
+    });
   }
 
   @override
@@ -42,44 +41,37 @@ class _PopularMoviesSliderState extends State<PopularMoviesSlider> {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<PopularMoviesBloc, PopularMoviesState>(
-      builder: (context, state) {
-        return SizedBox(
-          width: double.infinity,
-          height: 300,
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              // if ( != null)
-              //   Padding(
-              //     padding: const EdgeInsets.symmetric(horizontal: 10),
-              //     child: Text(
-              //       widget.movies.title!,
-              //       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-              //     ),
-              //   ),
+    return SizedBox(
+      width: double.infinity,
+      height: 300,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          // if ( != null)
+          //   Padding(
+          //     padding: const EdgeInsets.symmetric(horizontal: 10),
+          //     child: Text(
+          //       widget.movies.title!,
+          //       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+          //     ),
+          //   ),
 
-              // const SizedBox(height: 1),
+          // const SizedBox(height: 1),
 
-              //
-              BlocBuilder<RemoteMoviesBloc, RemoteMoviesState>(
-                  builder: (_, state) {
-                return Expanded(
-                  child: ListView.builder(
-                    controller: scrollController,
-                    scrollDirection: Axis.horizontal,
-                    itemCount: state.movies!.length,
-                    itemBuilder: (_, int index) => _MoviePoster(
-                      state.movies![index],
-                      // '${state.movies![index].title}-$index-${state.movies![index].id}'
-                    ),
-                  ),
-                );
-              }),
-            ],
+          //
+          Expanded(
+            child: ListView.builder(
+              controller: scrollController,
+              scrollDirection: Axis.horizontal,
+              itemCount: widget.movies.length,
+              itemBuilder: (_, int index) => _MoviePoster(
+                widget.movies[index],
+                // '${state.movies![index].title}-$index-${state.movies![index].id}'
+              ),
+            ),
           ),
-        );
-      },
+        ],
+      ),
     );
   }
 }
@@ -91,7 +83,6 @@ class _MoviePoster extends StatelessWidget {
 
   const _MoviePoster(
     this.movie,
-    // this.heroId
   );
 
   @override
