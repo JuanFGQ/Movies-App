@@ -44,9 +44,7 @@ class _Body extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
               ),
-              PopularMoviesSlider(
-                ,
-              ),
+              PopularMoviesSlider( ),
             ],
           ),
         );
