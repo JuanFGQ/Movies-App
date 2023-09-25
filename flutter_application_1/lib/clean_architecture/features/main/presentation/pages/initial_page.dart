@@ -52,7 +52,12 @@ class _Body extends StatelessWidget {
                   style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
                 ),
               ),
-              PopularMoviesSlider(),
+              PopularMoviesSlider(
+                movies: state.movies!,
+                onNextPage: () {
+                  print('CARGANDO MAS DATA ');
+                },
+              ),
             ],
           ),
         );
