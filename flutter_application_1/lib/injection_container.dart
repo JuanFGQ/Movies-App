@@ -28,10 +28,9 @@ Future<void> initializeDependencies() async {
   sl.registerSingleton<GetMovieUseCase>(GetMovieUseCase(sl()));
   sl.registerSingleton<GetPopularMoviesUseCase>(GetPopularMoviesUseCase(sl()));
   sl.registerSingleton<GetSearchMovieUseCase>(GetSearchMovieUseCase(sl()));
-
   sl.registerSingleton<GetActorsCastUseCase>(GetActorsCastUseCase(sl()));
 
-// //BLOCS
+//BLOCS
   sl.registerFactory<RemoteMoviesBloc>(() => RemoteMoviesBloc(sl()));
   sl.registerFactory<PopularMoviesBloc>(() => PopularMoviesBloc(sl()));
   sl.registerFactory<ActorsCastBloc>(() => ActorsCastBloc(sl()));
