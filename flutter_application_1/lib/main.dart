@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
     return MultiProvider(
       providers: [
         BlocProvider<PopularMoviesBloc>(
-            create: (context) => sl()..add(const GetPopularMovies())),
+            create: (context) => sl()..add(GetPopularMovies())),
         BlocProvider<RemoteMoviesBloc>(
             create: (context) => sl()..add(const GetMovies())),
         BlocProvider<ActorsCastBloc>(
