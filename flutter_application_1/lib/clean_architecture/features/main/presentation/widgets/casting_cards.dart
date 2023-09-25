@@ -1,7 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_application_1/clean_architecture/features/main/data/models/credits_model.dart';
-import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/actors_cast_bloc/bloc/actor_cast_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 import '../../domain/entities/credits_entity.dart';
