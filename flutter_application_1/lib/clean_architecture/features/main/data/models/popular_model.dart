@@ -16,10 +16,10 @@ class PopularResponseModel extends PopularResponseEntity {
           totalResults: totalResults,
         );
 
-  factory PopularResponseModel.fromJson(String str) =>
-      PopularResponseModel.fromMap(json.decode(str));
+  // factory PopularResponseModel.fromJson(String str) =>
+  //     PopularResponseModel.fromMap(json.decode(str));
 
-  factory PopularResponseModel.fromMap(Map<String, dynamic> json) =>
+  factory PopularResponseModel.fromJson(Map<String, dynamic> json) =>
       PopularResponseModel(
         page: json["page"] ?? "",
         results: List<MovieModel>.from(
