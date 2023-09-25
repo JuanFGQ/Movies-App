@@ -54,9 +54,6 @@ class _Body extends StatelessWidget {
               ),
               PopularMoviesSlider(
                 movies: state.movies!,
-                onNextPage: () {
-                  print('CARGANDO MAS DATA ');
-                },
               ),
             ],
           ),
