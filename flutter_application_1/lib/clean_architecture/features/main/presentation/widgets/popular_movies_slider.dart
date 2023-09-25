@@ -49,18 +49,6 @@ class _PopularMoviesSliderState extends State<PopularMoviesSlider> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // if ( != null)
-          //   Padding(
-          //     padding: const EdgeInsets.symmetric(horizontal: 10),
-          //     child: Text(
-          //       widget.movies.title!,
-          //       style: TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
-          //     ),
-          //   ),
-
-          // const SizedBox(height: 1),
-
-          //
           Expanded(
             child: ListView.builder(
               controller: scrollController,
