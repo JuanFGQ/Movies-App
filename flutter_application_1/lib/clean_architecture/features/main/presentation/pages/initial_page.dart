@@ -4,6 +4,9 @@ import 'package:flutter_application_1/clean_architecture/features/main/presentat
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/widgets/widgets_butterfile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
+import '../bloc/popular_movies_bloc/bloc/popular_movies_bloc.dart';
+import '../bloc/popular_movies_bloc/bloc/popular_movies_state.dart';
+
 class InitialPage extends StatelessWidget {
   const InitialPage({Key? key}) : super(key: key);
 
@@ -31,24 +34,31 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   
-        return SingleChildScrollView(
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              CardSwiper(),
-              Container(
-                margin: const EdgeInsets.only(left: 10),
-                child: const Text(
-                  'Popular Movies',
-                  style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
-                ),
-              ),
-              PopularMoviesSlider( ),
-            ],
+    return SingleChildScrollView(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          BlocBuilder<RemoteMoviesBloc, RemoteMoviesState>(
+            builder: (context, state) {
+              return CardSwiper(movies: state.movies);
+            },
           ),
-        );
-      }
-   
+          Container(
+            margin: const EdgeInsets.only(left: 10),
+            child: const Text(
+              'Popular Movies',
+              style: TextStyle(fontWeight: FontWeight.bold, fontSize: 20),
+            ),
+          ),
+          BlocBuilder<PopularMoviesBloc, PopularMoviesState>(
+            builder: (context, state) {
+              return PopularMoviesSlider(
+                movies: state.popularMovies,
+              );
+            },
+          ),
+        ],
+      ),
+    );
   }
 }
