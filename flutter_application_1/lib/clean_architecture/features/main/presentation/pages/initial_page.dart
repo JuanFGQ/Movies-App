@@ -31,20 +31,12 @@ class _Body extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<RemoteMoviesBloc, RemoteMoviesState>(
-        builder: (_, state) {
-      if (state is RemoteMoviesLoading) {
-        return const Center(child: CircularProgressIndicator());
-      }
-      if (state is RemoteMoviesError) {
-        return const Center(child: Icon(Icons.refresh));
-      }
-      if (state is RemoteMoviesDone) {
+   
         return SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              CardSwiper(movies: state.movies),
+              CardSwiper(),
               Container(
                 margin: const EdgeInsets.only(left: 10),
                 child: const Text(
@@ -53,13 +45,12 @@ class _Body extends StatelessWidget {
                 ),
               ),
               PopularMoviesSlider(
-                movies: state.movies!,
+                ,
               ),
             ],
           ),
         );
       }
-      return const SizedBox();
-    });
+   
   }
 }
