@@ -53,7 +53,7 @@ class _Body extends StatelessWidget {
           BlocBuilder<PopularMoviesBloc, PopularMoviesState>(
             builder: (context, state) {
               return PopularMoviesSlider(
-                movies: state.popularMovies,
+                movies: state.popularMovies!,
               );
             },
           ),
