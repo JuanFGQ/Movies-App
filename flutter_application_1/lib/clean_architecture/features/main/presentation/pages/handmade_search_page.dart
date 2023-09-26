@@ -30,12 +30,9 @@ class _HandMadeSearchDelegateState extends State<HandMadeSearchDelegate> {
             autofocus: true,
             onChanged: (value) {
               final searchBloc = BlocProvider.of<SearchMovieBloc>(context);
-              final stopWatch = Stopwatch()..start();
               query = value;
               if (value.isNotEmpty) {
                 _debouncer.run(() {
-                  stopWatch.stop();
-                  print('${stopWatch.elapsedMilliseconds} ms');
                   searchBloc.add(DebounceSearch(query: value));
                 });
               }
