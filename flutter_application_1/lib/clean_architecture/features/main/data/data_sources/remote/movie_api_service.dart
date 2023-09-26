@@ -5,7 +5,7 @@ import 'package:flutter_application_1/clean_architecture/core/resources/data_sta
 
 class MoviesApiService {
   final Dio _dio;
-  int popularPage = 0;
+  int pageCounter = 0;
   MoviesApiService(this._dio);
 
   Future<Response<dynamic>> getMovies() async {
@@ -29,12 +29,11 @@ class MoviesApiService {
     }
   }
 
-  Future<Response<dynamic>> getPopularMovies() async {
+  Future<Response<dynamic>> getPopularMovies({int pageNum = 1}) async {
     try {
-      popularPage++;
-      print('POPULAR PAGE $popularPage');
+      // pageCounter++;
       final response = await _dio.get(
-          'https://api.themoviedb.org/3/movie/popular?api_key=f43317ed52d05cf71a92f42bcb0ee678&page=$popularPage');
+          'https://api.themoviedb.org/3/movie/popular?api_key=f43317ed52d05cf71a92f42bcb0ee678&page=$pageNum');
       if (response.statusCode == 200) {
         return response;
       } else {

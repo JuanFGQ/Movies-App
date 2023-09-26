@@ -1,11 +1,7 @@
-import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/movie_entity.dart';
+abstract class PopularMoviesEvent {}
 
-abstract class PopularMoviesEvent {
-  // final List<MovieEntity>? onGetPopularMovies =;
+class GetPopularMovies extends PopularMoviesEvent {
+  final int? pageNum;
 
-  // PopularMoviesEvent(this.onGetPopularMovies);
+  GetPopularMovies({this.pageNum = 1});
 }
-
-class GetPopularMovies extends PopularMoviesEvent {}
-
-class AssgingPopularMovies extends PopularMoviesEvent {}

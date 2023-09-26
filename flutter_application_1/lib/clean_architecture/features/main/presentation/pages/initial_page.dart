@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/movies_bloc/movies_bloc.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/movies_bloc/movies_state.dart';
+import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/popular_movies_bloc/bloc/popular_movies_event.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/widgets/widgets_butterfile.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -53,7 +54,13 @@ class _Body extends StatelessWidget {
           BlocBuilder<PopularMoviesBloc, PopularMoviesState>(
             builder: (context, state) {
               return PopularMoviesSlider(
-                movies: state.popularMovies!,
+                movies: state.popularMovies,
+
+                // onNextPage: () {
+                //   // BlocProvider.of<PopularMoviesBloc>(context)
+                //   //     //cada vez que presione voy a añadir un numero a la pagina
+                //   //     .add(GetPopularMovies());
+                // },
               );
             },
           ),

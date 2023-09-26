@@ -2,17 +2,15 @@ import 'package:flutter_application_1/clean_architecture/core/resources/data_sta
 import 'package:flutter_application_1/clean_architecture/features/main/data/data_sources/remote/movie_api_service.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/data/models/credits_model.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/data/models/movie_model.dart';
-import 'package:flutter_application_1/clean_architecture/features/main/data/models/popular_model.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/credits_entity.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/movie_entity.dart';
-import 'package:flutter_application_1/clean_architecture/features/main/domain/entities/popular_entity.dart';
 
 import '../../domain/repositories/movie_repository.dart';
 
 class MoviesRepositoryImpl implements MovieRepository {
   final MoviesApiService _movieApiService;
   Map<int, List<CastEntityDom>> movieCast = {};
-  List<PopularResponseModel> newPopularMoviesList = [];
+  // List<MovieEntity> newPopularMoviesList = [];
 
   MoviesRepositoryImpl(this._movieApiService);
 
@@ -50,18 +48,20 @@ class MoviesRepositoryImpl implements MovieRepository {
   }
 
   @override
-  Future<DataState<List<PopularResponseEntity>>> getPopularMovies() async {
-    if (newPopularMoviesList.isNotEmpty) {
-      return DataSuccess(newPopularMoviesList);
-    }
+  Future<DataState<List<MovieEntity>>> getPopularMovies(
+      {int pageNum = 1}) async {
+    // if (newPopularMoviesList.isNotEmpty) {
+    //   return DataSuccess(newPopularMoviesList);
+    // }
 
-    final response = await _movieApiService.getPopularMovies();
+    final response = await _movieApiService.getPopularMovies(pageNum: pageNum);
     final popular = (response.data['results'] as List)
-        .map((data) => PopularResponseModel.fromJson(data))
+        .map((data) => MovieModel.fromJson(data))
         .toList();
 
     if (response.statusCode == 200) {
-      newPopularMoviesList = [...newPopularMoviesList, ...popular];
+      // newPopularMoviesList = [...newPopularMoviesList, ...popular];
+      // print('PRINT CREATED LIST $newPopularMoviesList');
       return DataSuccess(popular);
     } else {
       return DataFailed(Exception('Failed request'));
@@ -75,8 +75,6 @@ class MoviesRepositoryImpl implements MovieRepository {
     final search = (response.data['results'] as List)
         .map((e) => MovieModel.fromJson(e))
         .toList();
-
-    print('LISTA $search');
 
     if (response.statusCode == 200) {
       return DataSuccess(search);

@@ -1,14 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_application_1/clean_architecture/features/main/data/data_sources/remote/movie_api_service.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/popular_movies_bloc/bloc/popular_movies_bloc.dart';
 import 'package:flutter_application_1/clean_architecture/features/main/presentation/bloc/popular_movies_bloc/bloc/popular_movies_event.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
-import '../../domain/entities/popular_entity.dart';
+import '../../domain/entities/movie_entity.dart';
+import '../bloc/popular_movies_bloc/bloc/popular_movies_state.dart';
 
 class PopularMoviesSlider extends StatefulWidget {
-  final List<PopularResponseEntity> movies;
+  final List<MovieEntity>? movies;
+  // final Function onNextPage;
 
-  const PopularMoviesSlider({Key? key, required this.movies}) : super(key: key);
+  const PopularMoviesSlider({
+    Key? key,
+    required this.movies,
+    // required this.onNextPage
+  }) : super(key: key);
 
   @override
   State<PopularMoviesSlider> createState() => _PopularMoviesSliderState();
@@ -16,16 +23,19 @@ class PopularMoviesSlider extends StatefulWidget {
 
 class _PopularMoviesSliderState extends State<PopularMoviesSlider> {
   final ScrollController scrollController = ScrollController();
+  int popularMoviePage = 0;
 
   @override
   void initState() {
     super.initState();
-    final getMorePopularMovies = BlocProvider.of<PopularMoviesBloc>(context);
 
     scrollController.addListener(() {
       if (scrollController.position.pixels >=
           scrollController.position.maxScrollExtent - 500) {
-        getMorePopularMovies.add(GetPopularMovies());
+        // popularMoviePage++;
+        // final getMorePopularPages = BlocProvider.of<PopularMoviesBloc>(context);
+        // getMorePopularPages.add(GetPopularMovies());
+        print('test');
       }
     });
   }
@@ -47,10 +57,9 @@ class _PopularMoviesSliderState extends State<PopularMoviesSlider> {
             child: ListView.builder(
               controller: scrollController,
               scrollDirection: Axis.horizontal,
-              itemCount: widget.movies.length,
+              itemCount: widget.movies!.length,
               itemBuilder: (_, int index) => _MoviePoster(
-                widget.movies[index],
-                // '${state.movies![index].title}-$index-${state.movies![index].id}'
+                widget.movies![index],
               ),
             ),
           ),
@@ -62,7 +71,7 @@ class _PopularMoviesSliderState extends State<PopularMoviesSlider> {
 
 class _MoviePoster extends StatelessWidget {
   //
-  final PopularResponseEntity movie;
+  final MovieEntity movie;
   // final String heroId;
 
   const _MoviePoster(
@@ -71,7 +80,7 @@ class _MoviePoster extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final desestrucMovieModel = movie.results;
+    // final desestrucMovieModel = movie.results;
     // movie.heroId = heroId;
 
     return Container(
@@ -89,15 +98,13 @@ class _MoviePoster extends StatelessWidget {
             // Hero(
             //   tag: movie.heroId!,
             child: Hero(
-              tag: 'search-${desestrucMovieModel![3].toString()}',
+              tag: 'search-${movie.id!}',
               child: ClipRRect(
                 borderRadius: BorderRadius.circular(20),
                 child: FadeInImage(
                   placeholder: AssetImage('assets/no-image.jpg'),
-                  image: NetworkImage((desestrucMovieModel[8]
-                          .toString()
-                          .isNotEmpty)
-                      ? 'https://image.tmdb.org/t/p/w500${desestrucMovieModel![8].toString()}'
+                  image: NetworkImage((movie.posterPath != null)
+                      ? 'https://image.tmdb.org/t/p/w500${movie.posterPath}'
                       : 'https://i.stack.imgur.com/GNhxO.png'),
                   width: 130,
                   height: 175,
@@ -111,13 +118,13 @@ class _MoviePoster extends StatelessWidget {
           //
 
           Text(
-            desestrucMovieModel![10].toString(),
+            movie.title!,
             maxLines: 3,
             overflow: TextOverflow.ellipsis,
             textAlign: TextAlign.center,
           ),
           Text(
-            desestrucMovieModel![3].toString(),
+            movie.id.toString(),
             style: TextStyle(fontSize: 15),
           )
         ],
