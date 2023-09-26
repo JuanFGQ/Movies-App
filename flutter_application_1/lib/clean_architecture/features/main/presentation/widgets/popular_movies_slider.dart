@@ -23,19 +23,27 @@ class PopularMoviesSlider extends StatefulWidget {
 
 class _PopularMoviesSliderState extends State<PopularMoviesSlider> {
   final ScrollController scrollController = ScrollController();
-  int popularMoviePage = 0;
+  int popularMoviePage = 1;
+  bool isLoading = false;
 
   @override
   void initState() {
     super.initState();
 
     scrollController.addListener(() {
-      if (scrollController.position.pixels >=
-          scrollController.position.maxScrollExtent - 500) {
-        // popularMoviePage++;
-        // final getMorePopularPages = BlocProvider.of<PopularMoviesBloc>(context);
-        // getMorePopularPages.add(GetPopularMovies());
-        print('test');
+      if (!isLoading &&
+          scrollController.position.pixels >=
+              scrollController.position.maxScrollExtent - 500) {
+        isLoading = true;
+        popularMoviePage++;
+        final getMorePopularPages = BlocProvider.of<PopularMoviesBloc>(context);
+        getMorePopularPages.add(GetPopularMovies(pageNum: popularMoviePage));
+
+        getMorePopularPages.stream.listen((state) {
+          if (state is PopularMoviesDone || state is PopularMoviesError) {
+            isLoading = false;
+          }
+        });
       }
     });
   }
@@ -43,6 +51,7 @@ class _PopularMoviesSliderState extends State<PopularMoviesSlider> {
   @override
   void dispose() {
     super.dispose();
+    scrollController.dispose();
   }
 
   @override
