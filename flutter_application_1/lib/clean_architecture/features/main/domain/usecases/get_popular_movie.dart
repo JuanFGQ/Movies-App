@@ -11,7 +11,7 @@ class GetPopularMoviesUseCase
   GetPopularMoviesUseCase(this._popularMovieRepository);
 
   @override
-  Future<DataState<List<MovieEntity>>> call({int? params = 1}) {
-    return _popularMovieRepository.getPopularMovies();
+  Future<DataState<List<MovieEntity>>> call({int? params}) {
+    return _popularMovieRepository.getPopularMovies(params!);
   }
 }

@@ -29,9 +29,8 @@ class MoviesApiService {
     }
   }
 
-  Future<Response<dynamic>> getPopularMovies({int pageNum = 1}) async {
+  Future<Response<dynamic>> getPopularMovies(int pageNum) async {
     try {
-      // pageCounter++;
       final response = await _dio.get(
           'https://api.themoviedb.org/3/movie/popular?api_key=f43317ed52d05cf71a92f42bcb0ee678&page=$pageNum');
       if (response.statusCode == 200) {

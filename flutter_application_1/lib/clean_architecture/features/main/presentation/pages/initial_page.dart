@@ -53,15 +53,7 @@ class _Body extends StatelessWidget {
           ),
           BlocBuilder<PopularMoviesBloc, PopularMoviesState>(
             builder: (context, state) {
-              return PopularMoviesSlider(
-                movies: state.popularMovies,
-
-                // onNextPage: () {
-                //   // BlocProvider.of<PopularMoviesBloc>(context)
-                //   //     //cada vez que presione voy a añadir un numero a la pagina
-                //   //     .add(GetPopularMovies());
-                // },
-              );
+              return PopularMoviesSlider(movies: state.popularMovies);
             },
           ),
         ],

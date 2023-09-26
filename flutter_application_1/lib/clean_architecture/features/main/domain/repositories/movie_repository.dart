@@ -6,7 +6,7 @@ import '../entities/credits_entity.dart';
 abstract class MovieRepository {
   Future<DataState<List<MovieEntity>>> getMovieArticles();
 
-  Future<DataState<List<MovieEntity>>> getPopularMovies({int pageNum = 1});
+  Future<DataState<List<MovieEntity>>> getPopularMovies(int pageNum);
 
   Future<DataState<List<CastEntityDom>>> getActorCast(int id);
 

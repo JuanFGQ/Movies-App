@@ -10,7 +10,7 @@ import '../../domain/repositories/movie_repository.dart';
 class MoviesRepositoryImpl implements MovieRepository {
   final MoviesApiService _movieApiService;
   Map<int, List<CastEntityDom>> movieCast = {};
-  // List<MovieEntity> newPopularMoviesList = [];
+  List<MovieEntity> newPopularMoviesList = [];
 
   MoviesRepositoryImpl(this._movieApiService);
 
@@ -48,20 +48,14 @@ class MoviesRepositoryImpl implements MovieRepository {
   }
 
   @override
-  Future<DataState<List<MovieEntity>>> getPopularMovies(
-      {int pageNum = 1}) async {
-    // if (newPopularMoviesList.isNotEmpty) {
-    //   return DataSuccess(newPopularMoviesList);
-    // }
-
-    final response = await _movieApiService.getPopularMovies(pageNum: pageNum);
+  Future<DataState<List<MovieEntity>>> getPopularMovies(int pageNum) async {
+    final response = await _movieApiService.getPopularMovies(pageNum);
     final popular = (response.data['results'] as List)
         .map((data) => MovieModel.fromJson(data))
         .toList();
 
     if (response.statusCode == 200) {
-      // newPopularMoviesList = [...newPopularMoviesList, ...popular];
-      // print('PRINT CREATED LIST $newPopularMoviesList');
+      print('PRINT CREATED LIST $newPopularMoviesList');
       return DataSuccess(popular);
     } else {
       return DataFailed(Exception('Failed request'));
