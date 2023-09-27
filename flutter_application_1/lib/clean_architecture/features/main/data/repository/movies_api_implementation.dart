@@ -55,7 +55,6 @@ class MoviesRepositoryImpl implements MovieRepository {
         .toList();
 
     if (response.statusCode == 200) {
-      print('PRINT CREATED LIST $newPopularMoviesList');
       return DataSuccess(popular);
     } else {
       return DataFailed(Exception('Failed request'));
