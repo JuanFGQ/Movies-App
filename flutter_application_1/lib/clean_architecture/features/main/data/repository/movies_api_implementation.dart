@@ -9,8 +9,7 @@ import '../../domain/repositories/movie_repository.dart';
 
 class MoviesRepositoryImpl implements MovieRepository {
   final MoviesApiService _movieApiService;
-  Map<int, List<CastEntityDom>> movieCast = {};
-  List<MovieEntity> newPopularMoviesList = [];
+  Map<int, List<CastEntityDom>> movieCastCache = {};
 
   MoviesRepositoryImpl(this._movieApiService);
 
@@ -31,7 +30,7 @@ class MoviesRepositoryImpl implements MovieRepository {
 
   @override
   Future<DataState<List<CastEntityDom>>> getActorCast(int id) async {
-    if (movieCast.containsKey(id)) return DataSuccess(movieCast[id]!);
+    if (movieCastCache.containsKey(id)) return DataSuccess(movieCastCache[id]!);
 
     final response = await _movieApiService.getMovieCastById(id);
     final credits = (response.data['cast'] as List)
@@ -39,7 +38,7 @@ class MoviesRepositoryImpl implements MovieRepository {
         .toList();
 
     if (response.statusCode == 200) {
-      movieCast[id] = credits;
+      movieCastCache[id] = credits;
       return DataSuccess(credits);
     } else {
       return DataFailed(Exception('Failed request'));
@@ -50,12 +49,12 @@ class MoviesRepositoryImpl implements MovieRepository {
   @override
   Future<DataState<List<MovieEntity>>> getPopularMovies(int pageNum) async {
     final response = await _movieApiService.getPopularMovies(pageNum);
+
     final popular = (response.data['results'] as List)
         .map((data) => MovieModel.fromJson(data))
         .toList();
 
     if (response.statusCode == 200) {
-      print('PRINT CREATED LIST $newPopularMoviesList');
       return DataSuccess(popular);
     } else {
       return DataFailed(Exception('Failed request'));
