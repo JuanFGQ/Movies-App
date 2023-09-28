@@ -3,7 +3,7 @@ import 'package:flutter_application_1/clean_architecture/features/main/domain/en
 
 import '../../../../domain/entities/movie_entity.dart';
 
-abstract class PopularMoviesState extends Equatable {
+class PopularMoviesState extends Equatable {
   final List<MovieEntity>? popularMovies;
 
   final Exception? error;
@@ -11,7 +11,7 @@ abstract class PopularMoviesState extends Equatable {
   const PopularMoviesState({this.popularMovies, this.error});
 
   @override
-  List<Object?> get props => [popularMovies!, error!];
+  List<Object?> get props => [popularMovies, error];
 }
 
 class PopularMoviesLoading extends PopularMoviesState {

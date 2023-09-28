@@ -45,6 +45,7 @@ class _PopularMoviesSliderState extends State<PopularMoviesSlider> {
           }
         });
       }
+      setState(() {});
     });
   }
 

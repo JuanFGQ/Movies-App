@@ -10,7 +10,7 @@ class PopularMoviesBloc extends Bloc<PopularMoviesEvent, PopularMoviesState> {
   final GetPopularMoviesUseCase _getPopularMoviesUserCase;
 
   PopularMoviesBloc(this._getPopularMoviesUserCase)
-      : super((const PopularMoviesLoading())) {
+      : super((const PopularMoviesState(popularMovies: [], error: null))) {
     on<GetPopularMovies>(onGetPopularMovies);
   }
 
@@ -19,11 +19,12 @@ class PopularMoviesBloc extends Bloc<PopularMoviesEvent, PopularMoviesState> {
     final dataState = await _getPopularMoviesUserCase(params: event.pageNum);
 
     if (dataState is DataSuccess && dataState.data!.isNotEmpty) {
-      emit(PopularMoviesDone(dataState.data!));
+      final updateMovies = [...?state.popularMovies, ...dataState.data!];
+      emit(PopularMoviesDone(updateMovies));
     }
 
     if (dataState is DataFailed) {
-      emit(PopularMoviesError(state.error!));
+      emit(PopularMoviesError(Exception('no data loaded')));
     }
   }
 }
