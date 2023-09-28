@@ -5,10 +5,12 @@ import '../../../../domain/entities/movie_entity.dart';
 
 class PopularMoviesState extends Equatable {
   final List<MovieEntity>? popularMovies;
+  final List<MovieEntity>? concatenatedLists;
 
   final Exception? error;
 
-  const PopularMoviesState({this.popularMovies, this.error});
+  const PopularMoviesState(
+      {this.concatenatedLists, this.popularMovies, this.error});
 
   @override
   List<Object?> get props => [popularMovies, error];
