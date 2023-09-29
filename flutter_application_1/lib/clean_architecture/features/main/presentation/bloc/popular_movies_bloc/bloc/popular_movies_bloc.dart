@@ -8,7 +8,7 @@ class PopularMoviesBloc extends Bloc<PopularMoviesEvent, PopularMoviesState> {
   final GetPopularMoviesUseCase _getPopularMoviesUserCase;
 
   PopularMoviesBloc(this._getPopularMoviesUserCase)
-      : super((const PopularMoviesState(popularMovies: [], error: null))) {
+      : super((const PopularMoviesLoading())) {
     on<GetPopularMovies>(onGetPopularMovies);
   }
 
