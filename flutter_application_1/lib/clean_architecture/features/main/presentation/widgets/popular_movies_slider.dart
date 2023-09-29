@@ -123,9 +123,6 @@ class _MoviePoster extends StatelessWidget {
               ),
             ),
           ),
-          // ),
-
-          //
 
           Text(
             movie.title!,
