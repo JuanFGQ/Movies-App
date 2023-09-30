@@ -1,5 +1,4 @@
-
-## Main Page
+## Home Page
   -  full size poster movie preview
     * the user can slide on the full poster image 
   - on the bottom of screen,the popular movies with name and poster
